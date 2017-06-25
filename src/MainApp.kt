@@ -1,3 +1,5 @@
+import study.BaseStudy
+import study.BaseSyntax
 import study.ExtendCollection
 import study.FizzBuzz
 
@@ -5,8 +7,14 @@ import study.FizzBuzz
  * kotlin version 1.1.3
  */
 fun main(args: Array<String>) {
-    execFizzBuzz()
-    execExtendCollection()
+    //execFizzBuzz()
+    //execExtendCollection()
+    execBaseSyntax()
+}
+
+private fun execBaseSyntax() {
+    val bs = BaseSyntax()
+    bs.run()
 }
 
 private fun execFizzBuzz() {
@@ -22,3 +30,4 @@ private fun execExtendCollection() {
     ec.execute()
     println("end")
 }
+
