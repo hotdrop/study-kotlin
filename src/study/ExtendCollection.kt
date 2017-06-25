@@ -1,6 +1,11 @@
 package study
 
-class ExtendCollection {
+class ExtendCollection: BaseStudy(ExtendCollection::class.java.simpleName) {
+
+    override fun execute() {
+        super.execute()
+        exec()
+    }
 
     fun <T> MutableList<T>.replace(newElements: T) {
         this.forEachIndexed { index, oldElements ->
@@ -10,7 +15,7 @@ class ExtendCollection {
         }
     }
 
-    fun execute() {
+    private fun exec() {
 
         fun print(v: List<Elem>) {
             v.forEach { println(it.value) }

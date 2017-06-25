@@ -1,6 +1,11 @@
 package study
 
-class FizzBuzz {
+class FizzBuzz: BaseStudy(FizzBuzz::class.java.simpleName) {
+
+    override fun execute() {
+        super.execute()
+        exec()
+    }
 
     fun Int.divides(i: Int): Boolean {
         return (this % i == 0)
@@ -10,7 +15,7 @@ class FizzBuzz {
         return (this % i == 0 && this % j == 0)
     }
 
-    fun execute() {
+    private fun exec() {
         (1..100).forEach {
             when {
                 it.multiDivides(3, 5) -> println("fizz buzz")

@@ -8,5 +8,5 @@ abstract class BaseStudy(val className: String) {
         println("end $className")
     }
 
-    open fun execute() {}
+    open protected fun execute() {/* no operation */}
 }

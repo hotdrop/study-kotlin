@@ -9,7 +9,7 @@ class BaseSyntax: BaseStudy(BaseSyntax::class.java.simpleName) {
         studyDataClass()
     }
 
-    fun studyFor() {
+    private fun studyFor() {
         val array = arrayOf(1,2,3,4,5)
 
         print("  forを使った結果=")
@@ -35,7 +35,7 @@ class BaseSyntax: BaseStudy(BaseSyntax::class.java.simpleName) {
 
     }
 
-    fun studyNull() {
+    private fun studyNull() {
         var nullableStr: String? = "aiueo"
         var length = nullableStr?.length
         println("  長さは5になるはず。 $length")
@@ -52,11 +52,11 @@ class BaseSyntax: BaseStudy(BaseSyntax::class.java.simpleName) {
         println("  エルビス演算子使ったver。結果は−1になるはず。 $res")
     }
 
-    fun studyDataClass() {
+    private fun studyDataClass() {
         val myData = Person(1, "田中　太郎")
         val(id, name) = myData
         println("  idは $id 、 nameは $name です。")
     }
 
-    data class Person(val id: Int, var name: String)
+    private data class Person(val id: Int, var name: String)
 }
