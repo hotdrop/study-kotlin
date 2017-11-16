@@ -1,6 +1,8 @@
 package study
 
-class BaseSyntax: BaseStudy(BaseSyntax::class.java.simpleName) {
+import java.util.*
+
+class BasicSyntax : AbstractStudy(BasicSyntax::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
@@ -12,34 +14,27 @@ class BaseSyntax: BaseStudy(BaseSyntax::class.java.simpleName) {
 
     private fun studyFor() {
         val array = arrayOf(1,2,3,4,5)
-
         print("  forを使った結果=")
         for(i in array) {
             print(i)
         }
         println("")
-
         print("  forEachを使った結果=")
         array.forEach { print(it) }
-
         println("")
-
         print("  forを使った逆順=")
         for(i in 5 downTo 0) {
             print(i)
         }
-
         println("")
-
         print("  forEachを使った逆順=")
         (0..5).reversed().forEach { print(it) }
-
     }
 
     private fun studyNull() {
         var nullableStr: String? = "aiueo"
         var length = nullableStr?.length
-        println("  長さは5になるはず。 $length")
+        println("  5になるはず。 $length")
 
         nullableStr = null
         length = nullableStr?.length
@@ -64,7 +59,7 @@ class BaseSyntax: BaseStudy(BaseSyntax::class.java.simpleName) {
     private fun scopeFunction() {
         val letHoge = "hoge".let {
             it.toUpperCase()
-            //this: BaseSyntax
+            //this: BasicSyntax
         }
         val applyHoge = "hoge".apply {
             toUpperCase()
@@ -120,5 +115,26 @@ class BaseSyntax: BaseStudy(BaseSyntax::class.java.simpleName) {
 
     private fun updateProgress(value: Int) {
         val newValue = value.coerceIn(0, 100)
+    }
+    /**
+     * N x Nのマトリックスの左上から斜めがけ、右上から斜めがけし
+     * 差し引いた数の絶対値を表示する
+     */
+    fun testProblem3() {
+        val cin = Scanner(System.`in`)
+        val matrixCnt = cin.next().toInt()
+        val matrixList = mutableListOf<Int>()
+        for(i in 1..matrixCnt*matrixCnt) {
+            matrixList.add(cin.nextInt())
+        }
+
+        // 左からの斜め掛け
+        // 最初は1でmatrix+1インデックスを取得する
+        val primaryDiagonal = matrixList.filterIndexed { index, _ -> index == 0 || index%(matrixCnt + 1) == 0 }.sum()
+        // 右からの斜めがけ
+        // 最初はmatrixでmatrix−1インデックスを取得していく。これだと最初と最後の値も取れてしまうためindexの範囲を決める
+        val secondaryDiagonal = matrixList.filterIndexed { index, _ -> (index > 0 && index < matrixCnt*matrixCnt - 1) && index%(matrixCnt - 1) == 0 }.sum()
+        val result = Math.abs(primaryDiagonal - secondaryDiagonal)
+        print("$result")
     }
 }

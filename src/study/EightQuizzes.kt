@@ -1,6 +1,6 @@
 package study
 
-class EightQuizzes: BaseStudy(EightQuizzes::class.java.simpleName) {
+class EightQuizzes: AbstractStudy(EightQuizzes::class.java.simpleName) {
 
     override fun execute() {
         one()
