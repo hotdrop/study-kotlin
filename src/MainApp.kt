@@ -1,12 +1,26 @@
 import study.*
-import java.util.*
+
+enum class RunCode {
+    BasicSyntax,
+    FizzBuzz,
+    ExtendCollection,
+    LeapYear,
+    FibonacciNumber,
+    EasyLevelImpl
+}
 
 fun main(args: Array<String>) {
-    BasicSyntax().run()
-    FizzBuzz().run()
-    ExtendCollection().run()
-    LeapYear().run()
-    FibonacciNumber().run()
+
+    val runCode = RunCode.EasyLevelImpl
+
+    when(runCode) {
+        RunCode.BasicSyntax -> BasicSyntax().run()
+        RunCode.FizzBuzz -> FizzBuzz().run()
+        RunCode.ExtendCollection -> ExtendCollection().run()
+        RunCode.LeapYear -> LeapYear().run()
+        RunCode.FibonacciNumber -> FibonacciNumber().run()
+        RunCode.EasyLevelImpl -> EasyLevelImpl().run()
+    }
 }
 
 
