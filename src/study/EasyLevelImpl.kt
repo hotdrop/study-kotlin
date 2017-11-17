@@ -1,19 +1,79 @@
 package study
 
+import study.util.PrimeFactorizations
 import java.util.*
-import kotlin.collections.HashMap
 
 class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
         //gradingStudents()
+        //calcLcmAndGcdTest()
         //betweenTwoSets()
-        println("Test Lcm")
-        val result = calcLcm(108, 56)
-        println(" 最小公倍数=$result")
-        val result2 = calcGcd(108, 56)
-        println(" 最大公約数=$result2")
+        //breakingTheRecords()
+        //birthdayChocolate()
+        divisibleSumPairs()
+    }
+
+    private fun divisibleSumPairs() {
+        val cin = Scanner(System.`in`)
+        val size = cin.next().toInt()
+        val div = cin.next().toInt()
+        val numbers = IntArray(size)
+        (0 until size).forEach { numbers[it] = cin.next().toInt() }
+
+        var result = 0
+        numbers.filterIndexed { index, _ -> index < size - 1 }
+                .forEachIndexed { i, currentNum ->
+                    val j = i + 1
+                    result += (j until size).filter { (currentNum + numbers[it])%div == 0 }.count()
+                }
+        println(result)
+    }
+
+    private fun birthdayChocolate() {
+        val cin = Scanner(System.`in`)
+        val size = cin.next().toInt()
+        val numbers = IntArray(size)
+        (0 until size).forEach { numbers[it] = cin.next().toInt() }
+
+        // dは加算した合計値の判定
+        val d = cin.next().toInt()
+        // mは連続して加算する個数
+        val m = cin.next().toInt()
+        var count = 0
+
+        numbers.filterIndexed { index, _ -> index + m <= size }
+               .forEachIndexed { index, _ ->
+                   val sum = (0 until m).sumBy { numbers[it + index] }
+                   if(sum == d) count++
+               }
+        println(count)
+    }
+
+    private fun breakingTheRecords() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.next().toInt()
+        val scores = IntArray(cnt)
+        (0 until cnt).forEach { scores[it] = cin.next().toInt() }
+
+        var bestCnt = 0
+        var bestScore = scores[0]
+        var worstCnt = 0
+        var worstScore = scores[0]
+        scores.forEach { score ->
+            when {
+                score > bestScore -> {
+                    bestCnt++
+                    bestScore = score
+                }
+                score < worstScore -> {
+                    worstCnt++
+                    worstScore = score
+                }
+            }
+        }
+        println("$bestCnt $worstCnt")
     }
 
     private fun gradingStudents() {
@@ -38,110 +98,66 @@ class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
     }
 
     private fun betweenTwoSets() {
-        // 21:28-
         val cin = Scanner(System.`in`)
-        val aSetCnt = cin.next().toInt()
-        val bSetCnt = cin.next().toInt()
-        val aSet = mutableListOf<Int>()
-        val bSet = mutableListOf<Int>()
+        val aCnt = cin.next().toInt()
+        val bCnt = cin.next().toInt()
+        val aIntArr = IntArray(aCnt)
+        val bIntArr = IntArray(bCnt)
 
-        (1..aSetCnt).forEach {
-            aSet.add(cin.next().toInt())
+        (0 until aCnt).forEach {
+            aIntArr[it] = cin.next().toInt()
         }
-        (1..bSetCnt).forEach {
-            bSet.add(cin.next().toInt())
+        (0 until bCnt).forEach {
+            bIntArr[it] = cin.next().toInt()
         }
+
+        // Aの最小公倍数を求める
+        val lcmInA = calcLcm(aIntArr).toInt()
+        // Bの最大公約数を求める
+        val gcdInB = calcGcd(bIntArr).toInt()
+        // 2つの数値で割れる数を全て求める
+        var count = 0
+        (lcmInA..gcdInB).forEach { loopIndex ->
+            val conditionA = aIntArr.all { loopIndex%it == 0 }
+            val conditionB = bIntArr.all { it%loopIndex == 0 }
+            if(conditionA && conditionB) count++
+        }
+        println(count)
     }
 
-    private fun calcBetweenTwoSets(aSet: List<Int>, bSet: List<Int>) {
-        // 2 4     2 5
-        // 16 32 96   2 4 8 16
-        val lcmList = mutableListOf<Int>()
-        aSet.forEach {
+    private fun calcLcmAndGcdTest() {
+        check(calcLcm(intArrayOf(12)) == 12.0)
+        check(calcLcm(intArrayOf(2, 3)) == 6.0)
+        check(calcLcm(intArrayOf(108, 56)) == 1512.0)
+        check(calcLcm(intArrayOf(42, 72, 180)) == 2520.0)
+        check(calcLcm(intArrayOf(12, 42, 72)) == 504.0)
 
-        }
-    }
-
-    /**
-     * ２つの数値の最小公倍数を求める
-     */
-    private fun calcLcm(a: Int, b: Int): Double {
-
-        val aPFMap = calcPrimeFactorization(a)
-        val bPFMap = calcPrimeFactorization(b)
-
-        // それぞれのKeyを比較しValueの大きい方を掛け合わせる
-        var result = 1.toDouble()
-        val concatKeys = concatAndReturnList(aPFMap.keys, bPFMap.keys)
-        concatKeys.forEach {
-            val aVal = aPFMap.getOrDefault(it, 0).toDouble()
-            val bVal = bPFMap.getOrDefault(it, 0).toDouble()
-            result *= when {
-                aVal >= bVal -> Math.pow(it.toDouble(), aVal)
-                else -> Math.pow(it.toDouble(), bVal)
-            }
-        }
-        return result
+        check(calcGcd(intArrayOf(12)) == 12.0)
+        check(calcGcd(intArrayOf(12, 42)) == 6.0)
+        check(calcGcd(intArrayOf(108, 56)) == 4.0)
+        check(calcGcd(intArrayOf(12, 42, 72)) == 6.0)
     }
 
     /**
-     * ２つの数値の最大公約数を求める
+     * N個の数値の最小公倍数を求める
      */
-    private fun calcGcd(a: Int, b: Int): Double {
-
-        val aPFMap = calcPrimeFactorization(a)
-        val bPFMap = calcPrimeFactorization(b)
-
-        // それぞれのKeyを比較しValueの小さい方を掛け合わせる
-        var result = 1.toDouble()
-        val concatKeys = concatAndReturnList(aPFMap.keys, bPFMap.keys)
-        concatKeys.forEach {
-            val aVal = aPFMap.getOrDefault(it, 0).toDouble()
-            val bVal = bPFMap.getOrDefault(it, 0).toDouble()
-            result *= when {
-                aVal < bVal -> Math.pow(it.toDouble(), aVal)
-                else -> Math.pow(it.toDouble(), bVal)
-            }
-        }
-        return result
-    }
-
-    /**
-     * 素因数分解をTrial division法で行い、その結果をMapで取得する。
-     * Keyは割った素数N、valueは指数とする。
-     */
-    private fun calcPrimeFactorization(num: Int): MutableMap<Int, Int> {
-
-        var temp = num
-        var divNum = 2
-        val resultMap = mutableMapOf<Int, Int>()
-
-        // 素因数分解アルゴリズムで最も単純なTrial division法（２から順にルートNまでの素数で割っていく）を採用する。
-        // そのため、ループは「合成数xはNの2乗より大きくはならない」という性質を条件としている。
-        while(divNum * divNum < num) {
-
-            if(temp%divNum == 0) {
-                if(resultMap.containsKey(divNum)) {
-                    var count = resultMap[divNum] ?: 0
-                    resultMap.replace(divNum, ++count)
-                } else {
-                    resultMap.put(divNum, 1)
+    private fun calcLcm(numArray: IntArray): Double {
+        val primeFactorizations = PrimeFactorizations(numArray)
+        var result = 1.0
+        primeFactorizations.getDivisors()
+                .forEach {
+                    result *= Math.pow(it.toDouble(), primeFactorizations.maxIndex(it).toDouble())
                 }
-                temp /= divNum
-            } else {
-                divNum++
-            }
-        }
-        return resultMap
+        return result
     }
 
-    /**
-     * これもっと良い方法はないものか・・
-     */
-    private fun concatAndReturnList(s1: MutableSet<Int>, s2: MutableSet<Int>): List<Int> {
-        val tmp = s1.toMutableList()
-        tmp.addAll(s2.toMutableList())
-        return tmp.distinct()
+    private fun calcGcd(numArray: IntArray): Double {
+        val primeFactorizations = PrimeFactorizations(numArray)
+        var result = 1.0
+        primeFactorizations.getDivisors()
+                .forEach {
+                    result *= Math.pow(it.toDouble(), primeFactorizations.minIndex(it).toDouble())
+                }
+        return result
     }
-
 }
