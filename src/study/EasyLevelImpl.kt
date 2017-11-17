@@ -10,8 +10,10 @@ class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
         //gradingStudents()
         //betweenTwoSets()
         println("Test Lcm")
-        val result = calcLcm(16, 24)
-        println(" result=$result")
+        val result = calcLcm(108, 56)
+        println(" 最小公倍数=$result")
+        val result2 = calcGcd(108, 56)
+        println(" 最大公約数=$result2")
     }
 
     private fun gradingStudents() {
@@ -61,18 +63,17 @@ class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
     }
 
     /**
-     * 最小公倍数を求める
+     * ２つの数値の最小公倍数を求める
      */
     private fun calcLcm(a: Int, b: Int): Double {
 
         val aPFMap = calcPrimeFactorization(a)
         val bPFMap = calcPrimeFactorization(b)
 
-        val concatkeys = concatAndReturnList(aPFMap.keys, bPFMap.keys)
-
         // それぞれのKeyを比較しValueの大きい方を掛け合わせる
         var result = 1.toDouble()
-        concatkeys.forEach {
+        val concatKeys = concatAndReturnList(aPFMap.keys, bPFMap.keys)
+        concatKeys.forEach {
             val aVal = aPFMap.getOrDefault(it, 0).toDouble()
             val bVal = bPFMap.getOrDefault(it, 0).toDouble()
             result *= when {
@@ -80,20 +81,34 @@ class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
                 else -> Math.pow(it.toDouble(), bVal)
             }
         }
-
         return result
     }
 
     /**
-     * 最大公約数を求める
+     * ２つの数値の最大公約数を求める
      */
-    private fun calcGcd(a: Int, b: Int) {
+    private fun calcGcd(a: Int, b: Int): Double {
 
+        val aPFMap = calcPrimeFactorization(a)
+        val bPFMap = calcPrimeFactorization(b)
+
+        // それぞれのKeyを比較しValueの小さい方を掛け合わせる
+        var result = 1.toDouble()
+        val concatKeys = concatAndReturnList(aPFMap.keys, bPFMap.keys)
+        concatKeys.forEach {
+            val aVal = aPFMap.getOrDefault(it, 0).toDouble()
+            val bVal = bPFMap.getOrDefault(it, 0).toDouble()
+            result *= when {
+                aVal < bVal -> Math.pow(it.toDouble(), aVal)
+                else -> Math.pow(it.toDouble(), bVal)
+            }
+        }
+        return result
     }
 
     /**
-     * 素因数分解をして結果をMapで取得する
-     * valueが指数となる。
+     * 素因数分解をTrial division法で行い、その結果をMapで取得する。
+     * Keyは割った素数N、valueは指数とする。
      */
     private fun calcPrimeFactorization(num: Int): MutableMap<Int, Int> {
 
@@ -101,12 +116,14 @@ class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
         var divNum = 2
         val resultMap = mutableMapOf<Int, Int>()
 
+        // 素因数分解アルゴリズムで最も単純なTrial division法（２から順にルートNまでの素数で割っていく）を採用する。
+        // そのため、ループは「合成数xはNの2乗より大きくはならない」という性質を条件としている。
         while(divNum * divNum < num) {
 
             if(temp%divNum == 0) {
                 if(resultMap.containsKey(divNum)) {
-                    var prevNum = resultMap[divNum] ?: 0
-                    resultMap.replace(divNum, ++prevNum)
+                    var count = resultMap[divNum] ?: 0
+                    resultMap.replace(divNum, ++count)
                 } else {
                     resultMap.put(divNum, 1)
                 }
@@ -118,6 +135,9 @@ class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
         return resultMap
     }
 
+    /**
+     * これもっと良い方法はないものか・・
+     */
     private fun concatAndReturnList(s1: MutableSet<Int>, s2: MutableSet<Int>): List<Int> {
         val tmp = s1.toMutableList()
         tmp.addAll(s2.toMutableList())
