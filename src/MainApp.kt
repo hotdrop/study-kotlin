@@ -1,4 +1,5 @@
 import study.*
+import study.strings.EasyLevelFirstPage
 
 enum class RunCode {
     BasicSyntax,
@@ -6,12 +7,13 @@ enum class RunCode {
     ExtendCollection,
     LeapYear,
     FibonacciNumber,
-    EasyLevelImpl
+    EasyLevelImpl,
+    EasyLevelStringFirstPage,
 }
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.EasyLevelImpl
+    val runCode = RunCode.EasyLevelStringFirstPage
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()
@@ -20,6 +22,7 @@ fun main(args: Array<String>) {
         RunCode.LeapYear -> LeapYear().run()
         RunCode.FibonacciNumber -> FibonacciNumber().run()
         RunCode.EasyLevelImpl -> EasyLevelImpl().run()
+        RunCode.EasyLevelStringFirstPage -> EasyLevelFirstPage().run()
     }
 }
 

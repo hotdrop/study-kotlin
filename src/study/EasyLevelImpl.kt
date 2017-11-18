@@ -1,5 +1,6 @@
 package study
 
+import org.jetbrains.annotations.Mutable
 import study.util.PrimeFactorizations
 import java.util.*
 
@@ -7,12 +8,77 @@ class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
-        //gradingStudents()
-        //calcLcmAndGcdTest()
-        //betweenTwoSets()
-        //breakingTheRecords()
-        //birthdayChocolate()
+        gradingStudents()
+        calcLcmAndGcdTest()
+        betweenTwoSets()
+        breakingTheRecords()
+        birthdayChocolate()
         divisibleSumPairs()
+        migratoryBirds()
+        dayOfTheProgrammerInput()
+        bonAppetitInput()
+    }
+
+    private fun bonAppetitInput() {
+        val cin = Scanner(System.`in`)
+        val eatItemCount = cin.next().toInt()
+        val notEatItemIdx = cin.next().toInt()
+        val eatItems = IntArray(eatItemCount)
+        (0 until eatItemCount).forEach { eatItems[it] = cin.next().toInt() }
+        val annaCharged = cin.next().toInt()
+
+        val overCharge = calcCharge(eatItems, notEatItemIdx, annaCharged)
+        if(overCharge > 0) {
+            println(overCharge)
+        } else {
+            println("Bon Appetit")
+        }
+    }
+
+    private fun calcCharge(eatItems: IntArray, notEatItemIdx: Int, annaCharged: Int): Int {
+        eatItems.filterIndexed { index, _ -> index != notEatItemIdx }
+                .sum()
+                .run {
+                    return annaCharged - this/2
+                }
+    }
+
+    private fun dayOfTheProgrammerInput() {
+        val cin = Scanner(System.`in`)
+        val year = cin.next().toInt()
+
+        val result = dayOfTheProgrammer(year)
+        println(result)
+    }
+
+    private fun dayOfTheProgrammer(year: Int): String =
+            when {
+                year == 1918 -> "26.09.1918"
+                (year <= 1917 && year%4 == 0) || isLeapYear(year) -> "12.09.$year"
+                else -> "13.09.$year"
+            }
+
+    private fun isLeapYear(year: Int): Boolean =
+            (year%400 == 0 || (year%4 == 0 && year%100 != 0))
+
+    private fun migratoryBirds() {
+        val cin = Scanner(System.`in`)
+        val birdCnt = cin.next().toInt()
+        val birdTypes = IntArray(birdCnt)
+        (0 until birdCnt).forEach { birdTypes[it] = cin.next().toInt() }
+
+        val typeCountArray = IntArray(6)
+        birdTypes.forEach { typeCountArray[it] += 1 }
+
+        var maxCntIdx = 0
+        var maxCnt = 0
+        typeCountArray.forEachIndexed { index, count ->
+            if(count > maxCnt) {
+                maxCnt = count
+                maxCntIdx = index
+            }
+        }
+        println(maxCntIdx)
     }
 
     private fun divisibleSumPairs() {
