@@ -12,7 +12,35 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
         //superReducedString()
         //camelCase()
         //twoCharacters()
-        caesarCipher()
+        //caesarCipher()
+        marsExploration()
+    }
+
+    /**
+     * 与えられた文字列sに対し、SOSの変換数を求める。
+     * これは火星から送信されたSOSの文字のうち宇宙線によって変更されてしまった、という想定のようだ。
+     * メッセージはSOSの連続で、必ず大文字、メッセージ長は必ず3の倍数。
+     * 例
+     *  入力文字: SOSSPSSQSSOR
+     *  出力: 3
+     *  期待した信号は「SOSSOSSOSSOS」とSOS4回の12文字である。受信した時は「SOSS P SS Q SSO R」
+     *  とPとQとRがおかしくなっている。つまり変換されてしまった文字は3つ
+     *
+     */
+    private fun marsExploration() {
+        val cin = Scanner(System.`in`)
+        val message = cin.next()
+
+        // 3文字ごとにindexでループ
+        var index = 0
+        var count = 0
+        while(index < message.length - 2) {
+            if(message[index] != 'S') count++
+            if(message[index + 1] != 'O') count++
+            if(message[index + 2] != 'S') count++
+            index += 3
+        }
+        println(count)
     }
 
     /**
