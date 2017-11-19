@@ -11,9 +11,70 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
 
         //superReducedString()
         //camelCase()
-        twoCharacters()
+        //twoCharacters()
+        caesarCipher()
     }
 
+    /**
+     * 暗号
+     * 与えられた文字列sに対し、keyの数だけASCII CODEに従ってシフトして表示する。
+     * シフト対象は A-Z 及び a-z である。
+     * keyは0〜100まで指定が可能であり、Zないしzの次はAないしaと巡回する。
+     * 文字列sは任意の英数字。記号もあり。
+     *  例:
+     *   文字列: abz-AZ
+     *   key: 2
+     *   結果: cdb-CB
+     *
+     *   文字列: 159357lcfd
+     *   key: 98
+     *   結果: 159357fwzx
+     */
+    private val asciiCodeA = 65
+    private val asciiCodeZ = 90
+    private val asciiCodea = 97
+    private val asciiCodez = 122
+
+    private fun caesarCipher() {
+        val cin = Scanner(System.`in`)
+
+        val len = cin.next().toInt()
+        val s = cin.next()
+        val key = cin.next().toInt()
+
+        val result = encryptCaesarCipher(s, key)
+        println(result)
+    }
+
+    private fun encryptCaesarCipher(s: String, keyNum: Int) = s.map {
+        val charCode = it.toInt()
+        when (charCode) {
+            in asciiCodeA..asciiCodeZ -> shiftAsciiCode(charCode, keyNum, asciiCodeA, asciiCodeZ).toChar()
+            in asciiCodea..asciiCodez -> shiftAsciiCode(charCode, keyNum, asciiCodea, asciiCodez).toChar()
+            else -> it
+        }
+    }.joinToString("")
+
+    private fun shiftAsciiCode(charCode: Int, shiftNum: Int, rangeFirstAsciiCode: Int, rangeLastAsciiCode: Int): Int {
+        val shiftNumInRange = shiftNum%(rangeLastAsciiCode - rangeFirstAsciiCode + 1)
+        return when {
+            shiftNumInRange == 0 -> charCode
+            charCode + shiftNumInRange <= rangeLastAsciiCode -> charCode + shiftNumInRange
+            else -> (rangeFirstAsciiCode - 1) + ((charCode + shiftNumInRange) - rangeLastAsciiCode)
+        }
+    }
+
+    /**
+     * 連続しない2種類の文字が最も長いものを抜き出してその長さを求める。
+     * 文章だと分かりづらいため例を示す。
+     *  元の文  abcdcabaeeba
+     *  1. a,cを選んだ場合 = acacaa  これはaが連続しているためNG
+     *  2. b,cを選んだ場合 = bccbb  これも連続いているためNG
+     *  3. a,bを選んだ場合 = abababa  これはOK。長さは7
+     *  4. c,dを選んだ場合 = cdc これはOK。長さは3
+     *  ・・・
+     *  とやっていき、一番長いのはa,bを選んだ場合で長さは7となる。
+     */
     private fun twoCharacters() {
         val cin = Scanner(System.`in`)
         val strLength = cin.next().toInt()
@@ -82,6 +143,12 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
         return true
     }
 
+    /**
+     * キャメルケースで書かれたletterの単語数を数える。
+     * ただし先頭１文字は必ず小文字となるがこれも単語として数える。
+     * 例えば thisLetterIsTest.
+     * と入力があった場合、単語は this Letter Is Test の4つ
+     */
     private fun camelCase() {
         val cin = Scanner(System.`in`)
         val letter = cin.next().toString()
@@ -94,6 +161,16 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
 
     private fun countWordWithCamelCase(s: String) = s.count { it.isUpperCase() }
 
+    /**
+     * 入力された文字列sに対し、隣り合う文字を全て除去して出力する。
+     * 除去した結果、空になったら「Empty String」と出力する。
+     * 例
+     *  1. baeeabdd → 連続したee、ddが対象。除去する
+     *  2. baab → 除去した結果、今度はaaが連続したため除去する
+     *  3. bb → 除去した結果、今度はbbが連続したため除去
+     *  4. Empty String → 結果、空文字になったため「Empty String」と表示する
+     *
+     */
     private fun superReducedString() {
         val cin = Scanner(System.`in`)
         val s = cin.next().toString()
