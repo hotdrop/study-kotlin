@@ -9,7 +9,7 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
     override fun execute() {
         super.execute()
 
-        val targetNo = 6
+        val targetNo = 7
         when(targetNo) {
             1 -> superReducedString()
             2 -> camelCase()
@@ -17,8 +17,40 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
             4 -> caesarCipher()
             5 -> marsExploration()
             6 -> hackerRank()
+            7 -> pangrams()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * Pangramかどうか判定する
+     * Pangramとはアルファベットの全ての文字を少なくとも1回使用して構成された文章
+     *
+     */
+    private fun pangrams() {
+        val cin = Scanner(System.`in`)
+        val s = cin.nextLine()
+
+        if(isPangrams(s)) {
+            println("pangram")
+        } else {
+            println("not pangram")
+        }
+    }
+
+    private val targetCharRange = 'A'.toInt()..'Z'.toInt()
+    private fun isPangrams(s: String): Boolean {
+        val charArr = s.toUpperCase()
+                        .filter { it.toInt() in targetCharRange  }
+                        .toCharArray()
+                        .sorted()
+                        .distinct()
+        var alphabetIndex = 'A'.toInt()
+
+        charArr.asSequence()
+                .takeWhile { it.toInt() == alphabetIndex }
+                .forEach { alphabetIndex++ }
+        return (alphabetIndex == 'Z'.toInt() + 1)
     }
 
     /**
