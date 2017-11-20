@@ -9,11 +9,57 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
     override fun execute() {
         super.execute()
 
-        //superReducedString()
-        //camelCase()
-        //twoCharacters()
-        //caesarCipher()
-        marsExploration()
+        val targetNo = 6
+        when(targetNo) {
+            1 -> superReducedString()
+            2 -> camelCase()
+            3 -> twoCharacters()
+            4 -> caesarCipher()
+            5 -> marsExploration()
+            6 -> hackerRank()
+            else -> println("Your set number:'$targetNo' is nothing question.")
+        }
+    }
+
+    /**
+     * 与えられた文字列sに対し、「hackerrank」という単語の1つ1つの文字がこの
+     * 順番で出現するかチェックし、成立すればYES、しなければNOと入力する。
+     * 文字列sは複数個まとめて入力できる。
+     * 例:
+     *  入力文字:
+     *      hereiamstackerrank
+     *      hackerworld
+     *      hackerhackerrankrank
+     *  出力:
+     *      YES
+     *      NO
+     *      YES
+     */
+    private fun hackerRank() {
+        val cin = Scanner(System.`in`)
+        val queryCnt = cin.next().toInt()
+        val queries = mutableListOf<String>()
+        (1..queryCnt).forEach {
+            queries.add(cin.next())
+        }
+
+        queries.map { isAllAppearHackerRank(it) }
+                .forEach { if(it) println("YES") else println("NO") }
+    }
+
+    private fun isAllAppearHackerRank(s: String): Boolean {
+        val words = "hackerrank"
+        var appearIndex = 0
+        var isSuccess = false
+        s.forEach {
+            if(!isSuccess && it == words[appearIndex]) {
+                appearIndex++
+                if(appearIndex == words.length) {
+                    isSuccess = true
+                }
+            }
+        }
+        return isSuccess
     }
 
     /**
