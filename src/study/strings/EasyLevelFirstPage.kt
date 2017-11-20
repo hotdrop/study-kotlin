@@ -38,19 +38,20 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
         }
     }
 
-    private val targetCharRange = 'A'.toInt()..'Z'.toInt()
+    private val startCharIndex = 'A'.toInt()
+    private val endCharIndex = 'Z'.toInt()
     private fun isPangrams(s: String): Boolean {
         val charArr = s.toUpperCase()
-                        .filter { it.toInt() in targetCharRange  }
+                        .filter { it.toInt() in startCharIndex..endCharIndex   }
                         .toCharArray()
                         .sorted()
                         .distinct()
-        var alphabetIndex = 'A'.toInt()
+        var alphabetIndex = startCharIndex
 
         charArr.asSequence()
                 .takeWhile { it.toInt() == alphabetIndex }
                 .forEach { alphabetIndex++ }
-        return (alphabetIndex == 'Z'.toInt() + 1)
+        return (alphabetIndex == endCharIndex + 1)
     }
 
     /**
