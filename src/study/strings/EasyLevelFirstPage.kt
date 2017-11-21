@@ -3,13 +3,14 @@ package study.strings
 import org.jetbrains.annotations.Mutable
 import study.AbstractStudy
 import java.util.*
+import kotlin.collections.HashMap
 
 class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
 
-        val targetNo = 7
+        val targetNo = 8
         when(targetNo) {
             1 -> superReducedString()
             2 -> camelCase()
@@ -18,9 +19,98 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
             5 -> marsExploration()
             6 -> hackerRank()
             7 -> pangrams()
+            8 -> weightedUniformStrings()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
     }
+
+    /**
+     * 小文字のa〜zにそれぞれ1〜26までのweightを割り当てる。
+     * ある文字列sに対し、uniformとして定義される形でそれぞれweightを割り当て、そのweightが入力された数値と
+     * 一致すれば「Yes」、一致しなければ「No」と出力する。
+     * 【Note】
+     * uniformとは単一または連続した同一文字を示す。
+     * 「c、ccc、a」はuniformであり、「bc、cd」などはuniformではない。
+     * この場合、c=3、ccc=3×3=9、a=1 となる。
+     * 厄介なのは連続した文字の場合、その組み合わせがweight対象になる。
+     * 文章だと意味不明なので例で示す。
+     * Input
+     *  abccddde       -> ある文字s
+     *  6              -> 入力weight数
+     *  1 3 12 5 9 10  -> 入力weight
+     * Output
+     *  Yes Yes Yes Yes No No
+     *
+     *  【考え方】
+     *  abccdddeを以下のようにuniformに分解する。
+     *  [uniform : weight]
+     *    a      : 1
+     *    b      : 2
+     *    c      : 3
+     *    cc     : 6
+     *    d      : 4
+     *    dd     : 8
+     *    ddd    : 12
+     *    e      : 5
+     *   入力値のうち、「1 3 12 5」はweightに存在するためYES、9と10はないためNOとなる。
+     */
+    private fun weightedUniformStrings() {
+        val cin = Scanner(System.`in`)
+        val s = cin.next()
+        val cnt = cin.next().toInt()
+        val inputWeight = IntArray(cnt)
+        (0 until cnt).forEach {
+            inputWeight[it] = cin.nextInt()
+        }
+
+        val weightArray = createWeightArray(s)
+        inputWeight.forEach{
+            if(containsWeight(it, weightArray)) {
+                println("Yes")
+            } else {
+                println("No")
+            }
+        }
+    }
+
+    private fun createWeightArray(s: String): IntArray {
+        // charとcountのMap作成
+        val charCountMap = mutableMapOf<Char, Int>()
+        var count = 1
+        // kotlinっぽくないが・・
+        s.forEachIndexed { index, c ->
+            // 次の文字があってかつ同じ文字の場合
+            if(index + 1 < s.length && c == s[index + 1]) {
+                count++
+            } else {
+                // その文字がすでにありcountが大きい場合は置き換える
+                if(charCountMap.containsKey(c)) {
+                    val charCount = charCountMap.getOrDefault(c,1)
+                    if(charCount < count) {
+                        charCountMap.replace(c, count)
+                    }
+                } else {
+                    charCountMap.put(c, count)
+                }
+                count = 1
+            }
+        }
+
+        // 1〜26の添え字をweightとして使用するためsizeは27とする
+        val weightArray = IntArray(27)
+        charCountMap.forEach {
+            val index = it.key.toInt() - 96
+            weightArray[index] = it.value
+        }
+        return weightArray
+    }
+
+    private fun containsWeight(inputWeight: Int, weightArray: IntArray) =
+            weightArray
+                .filterIndexed {index, charCount ->
+                    charCount > 0 &&
+                    inputWeight%index == 0 && (inputWeight/index) <= charCount
+                }.any()
 
     /**
      * Pangramかどうか判定する
