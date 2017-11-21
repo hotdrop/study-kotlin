@@ -8,7 +8,7 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
     override fun execute() {
         super.execute()
 
-        val targetNo = 8
+        val targetNo = 9
         when(targetNo) {
             1 -> superReducedString()
             2 -> camelCase()
@@ -18,8 +18,63 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
             6 -> hackerRank()
             7 -> pangrams()
             8 -> weightedUniformStrings()
+            9 -> separateTheNumbers()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    private fun separateTheNumbers() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.next().toInt()
+        val queries = mutableListOf<String>()
+        (0 until cnt).forEach {
+            queries.add(cin.next())
+        }
+
+        queries.map { checkBeautifulString(it) }.forEach {
+            if(it.isNullOrEmpty()) {
+                println("NO")
+            } else {
+                println("YES $it")
+            }
+        }
+    }
+
+    /**
+     * 条件に一致した場合は最初の文字数値を返す。
+     * 一致しない場合はnullを返す。
+     */
+    private fun checkBeautifulString(s: String): String? {
+        // 1文字のみまたは先頭が0は除外
+        if(s.length == 1 || s.startsWith('0')) {
+            return null
+        }
+        (1..(s.length/2)).forEach {
+            // 最初のsplit文字を取得する
+            val currentStr = s.substring(0, it)
+            if(isBeautifulString(s, currentStr)) {
+                return currentStr
+            }
+        }
+        return null
+    }
+
+    private fun isBeautifulString(s: String, currentStr: String): Boolean {
+        // 最初にまず先頭と次の文字が条件を満たしているかチェックする。ここで合ってなければ処理の無駄なので
+        val nextStr = (currentStr.toLong() + 1).toString()
+        if(!s.startsWith(currentStr + nextStr)) {
+            return false
+        }
+        // 最初の文字から、正解となる文字列を生成する
+        val sb = StringBuilder()
+        var currentNumber = currentStr.toLong()
+        while(sb.toString().length < s.length) {
+            sb.append(currentNumber.toString())
+            currentNumber++
+        }
+        // 文字列が完全一致すればOK
+        val makeExpectedString = sb.toString()
+        return s == makeExpectedString
     }
 
     /**
