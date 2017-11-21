@@ -1,9 +1,7 @@
 package study.strings
 
-import org.jetbrains.annotations.Mutable
 import study.AbstractStudy
 import java.util.*
-import kotlin.collections.HashMap
 
 class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleName) {
 
@@ -96,6 +94,7 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
             }
         }
 
+        // 最初はMapでやっていたが、テストケースの中に巨大な文字列があったためIntArrayで計算したほうが早いと判断した
         // 1〜26の添え字をweightとして使用するためsizeは27とする
         val weightArray = IntArray(27)
         charCountMap.forEach {
@@ -105,6 +104,14 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
         return weightArray
     }
 
+    /**
+     * 指定された値のweightがあるか計算する。
+     *
+     * この判定をするにあたって、必ずいずれかのweightの倍数になっているはずなので
+     * 除算できてかつその値がcharの連続出現数未満であればweightありと判断して良いと考える。
+     * 計算方法は色々と迷った結果、これに落ち着いた。
+     *
+     */
     private fun containsWeight(inputWeight: Int, weightArray: IntArray) =
             weightArray
                 .filterIndexed {index, charCount ->
