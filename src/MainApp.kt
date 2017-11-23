@@ -1,4 +1,5 @@
 import study.*
+import study.sorting.FirstPage
 import study.strings.EasyLevelFirstPage
 
 enum class RunCode {
@@ -9,11 +10,12 @@ enum class RunCode {
     FibonacciNumber,
     EasyLevelImpl,
     EasyLevelStringFirstPage,
+    EasyLevelSortingFirstPage,
 }
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.EasyLevelStringFirstPage
+    val runCode = RunCode.EasyLevelSortingFirstPage
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()
@@ -23,6 +25,7 @@ fun main(args: Array<String>) {
         RunCode.FibonacciNumber -> FibonacciNumber().run()
         RunCode.EasyLevelImpl -> EasyLevelImpl().run()
         RunCode.EasyLevelStringFirstPage -> EasyLevelFirstPage().run()
+        RunCode.EasyLevelSortingFirstPage -> FirstPage().run()
     }
 }
 
