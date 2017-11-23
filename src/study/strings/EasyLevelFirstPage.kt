@@ -8,7 +8,7 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
     override fun execute() {
         super.execute()
 
-        val targetNo = 9
+        val targetNo = 10
         when(targetNo) {
             1 -> superReducedString()
             2 -> camelCase()
@@ -19,10 +19,43 @@ class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleNam
             7 -> pangrams()
             8 -> weightedUniformStrings()
             9 -> separateTheNumbers()
+            10 -> funnyString()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
     }
 
+    /**
+     * 入力文字列sとその逆順のrについて
+     *  sのi文字目とi-1文字目の差=rのi文字目とi-1文字目の差
+     * であれば「Funny」、そうでなければ「Not Funny」と出力する
+     */
+    private fun funnyString() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.next().toInt()
+        val sArr = mutableListOf<String>()
+        (0 until cnt).forEach { sArr.add(cin.next()) }
+
+        sArr.forEach {
+            if(isFunnyString(it)) println("Funny") else println("Not Funny")
+        }
+    }
+
+    private fun isFunnyString(s: String) =
+        (1 until s.length).all {
+            Math.abs(s[it].toInt() - s[it-1].toInt()) == Math.abs(s[s.length - it].toInt() - s[s.length - it - 1].toInt())
+        }
+
+    /**
+     * 入力文字列sは全て数値であることを条件に、sの連続した数値が1ずつインクリメント
+     * されていれば美しい文字列と判断し、YESとその最初の文字を、されていなければNOを出力する。
+     * ただし、0パディングされていたり0サプレスされている場合は美しい文字列と判断しない。
+     * 例:
+     *  9899100 -> 98, 99, 100 となり「YES 98」と出力する。
+     *  010203 -> 「NO」と出力する。
+     *  204206207208 -> 「NO」と出力する。
+     * Note
+     *  4バイトつまり2,147,483,648を超える数値の文字列が指定される可能性に考慮する。
+     */
     private fun separateTheNumbers() {
         val cin = Scanner(System.`in`)
         val cnt = cin.next().toInt()
