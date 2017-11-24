@@ -9,13 +9,37 @@ class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 3
+        val targetNo = 4
         when(targetNo) {
             1 -> bigSorting()
             2 -> sampleChallenge()
             3 -> insertionSort()
+            4 -> runningTimeOfAlgorithms()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * 挿入ソートのシフト回数を出力する
+     */
+    private fun runningTimeOfAlgorithms() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val numArr = IntArray(cnt)
+        (0 until cnt).forEach { numArr[it] = cin.nextInt() }
+
+        var shiftCnt = 0
+        (1 until numArr.size).forEach { i ->
+            val currentNum = numArr[i]
+            var j = i-1
+            while(j >= 0 && numArr[j] > currentNum) {
+                numArr[j+1] = numArr[j]
+                j--
+                shiftCnt++
+            }
+            numArr[j+1] = currentNum
+        }
+        println(shiftCnt)
     }
 
     /**
