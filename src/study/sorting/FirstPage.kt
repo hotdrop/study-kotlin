@@ -20,6 +20,41 @@ class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
     }
 
     /**
+     * part1はQuickSortの最初の操作であるパーティションを学ぶ。
+     * 入力された数値配列prに対し、pr[0]となる数値pに対して
+     *  pより小さい要素をleft配列
+     *  pより大きい要素をright配列
+     *  pと同じ要素はequal配列
+     * とパーティション区切りにし、left + equal + right の順にsingle line出力する。
+     * それぞれは未ソートで良い。
+     */
+    private fun quickSortPart1() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val numArr = IntArray(cnt)
+        (0 until cnt).forEach { numArr[it] = cin.nextInt() }
+
+        val p = numArr[0]
+        val leftArr = mutableSetOf<Int>()
+        val equalArr = mutableSetOf<Int>()
+        val rightArr = mutableSetOf<Int>()
+
+        numArr.forEach {
+            when {
+                p == it -> equalArr.add(it)
+                p < it -> leftArr.add(it)
+                else -> rightArr.add(it)
+            }
+        }
+        val result = mutableSetOf<Int>().apply {
+            addAll(leftArr)
+            addAll(equalArr)
+            addAll(rightArr)
+        }
+
+    }
+
+    /**
      * 挿入ソートのシフト回数を出力する
      */
     private fun runningTimeOfAlgorithms() {

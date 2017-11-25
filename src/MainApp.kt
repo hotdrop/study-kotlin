@@ -15,7 +15,7 @@ enum class RunCode {
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.EasyLevelSortingFirstPage
+    val runCode = RunCode.FizzBuzz
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()
