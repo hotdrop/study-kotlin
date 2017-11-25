@@ -9,15 +9,39 @@ class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 5
+        val targetNo = 6
         when(targetNo) {
             1 -> bigSorting()
             2 -> sampleChallenge()
             3 -> insertionSort()
             4 -> runningTimeOfAlgorithms()
             5 -> quickSortPart1()
+            6 -> countingSort1()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * 0〜99までの任意の値を入力とし、それらの値が何回出現するかカウントする。
+     * 入力値はなんでもいいが、出力は必ず0to99でそれぞれの数値が何回出現したか表示する。
+     * 例えば「1 5 3 1 1」と入力したら出力は
+     * 「0 3 0 1 0 1 0 0 0 0 ・・この間は全部0・・ 0」となる。
+     *  （1は3回、3は1回、5は1回出現する）
+     */
+    private fun countingSort1() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val numArr = IntArray(cnt)
+        (0 until cnt).forEach { numArr[it] = cin.nextInt() }
+
+        val result = countingNumber(numArr)
+        print(result.joinToString(" "))
+    }
+
+    private fun countingNumber(inArr: IntArray): IntArray {
+        val countingArr = IntArray(100)
+        inArr.forEach { countingArr[it] += 1 }
+        return countingArr
     }
 
     /**
