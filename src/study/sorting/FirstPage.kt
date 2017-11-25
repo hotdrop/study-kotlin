@@ -9,12 +9,13 @@ class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 4
+        val targetNo = 5
         when(targetNo) {
             1 -> bigSorting()
             2 -> sampleChallenge()
             3 -> insertionSort()
             4 -> runningTimeOfAlgorithms()
+            5 -> quickSortPart1()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
     }
@@ -35,23 +36,23 @@ class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
         (0 until cnt).forEach { numArr[it] = cin.nextInt() }
 
         val p = numArr[0]
-        val leftArr = mutableSetOf<Int>()
-        val equalArr = mutableSetOf<Int>()
-        val rightArr = mutableSetOf<Int>()
+        val leftArr = mutableListOf<Int>()
+        val equalArr = mutableListOf<Int>()
+        val rightArr = mutableListOf<Int>()
 
         numArr.forEach {
             when {
                 p == it -> equalArr.add(it)
-                p < it -> leftArr.add(it)
-                else -> rightArr.add(it)
+                p < it -> rightArr.add(it)
+                else -> leftArr.add(it)
             }
         }
-        val result = mutableSetOf<Int>().apply {
-            addAll(leftArr)
+
+        val concatArr = leftArr.apply {
             addAll(equalArr)
             addAll(rightArr)
         }
-
+        println(concatArr.joinToString(" "))
     }
 
     /**
