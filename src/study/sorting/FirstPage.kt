@@ -9,7 +9,7 @@ class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 6
+        val targetNo = 7
         when(targetNo) {
             1 -> bigSorting()
             2 -> sampleChallenge()
@@ -17,8 +17,38 @@ class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
             4 -> runningTimeOfAlgorithms()
             5 -> quickSortPart1()
             6 -> countingSort1()
+            7 -> countingSort2()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * Sort1はカウントをするのに対し、Sort2では値を昇順ソートする。
+     * 条件: 入力の数は0〜1000000、入力する数値は0〜99とする。
+     */
+    private fun countingSort2() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val numArr = IntArray(cnt)
+        (0 until cnt).forEach { numArr[it] = cin.nextInt() }
+
+        val result = orderNumberByAsc(numArr)
+        println(result.joinToString(" "))
+    }
+
+    private fun orderNumberByAsc(inArr: IntArray): IntArray {
+        val countArr = IntArray(100)
+        inArr.forEach { countArr[it] += 1 }
+
+        val orderArr = IntArray(inArr.size)
+        var idx = 0
+        countArr.forEachIndexed { index, cnt ->
+            (1..cnt).forEach {
+                orderArr[idx] = index
+                idx += 1
+            }
+        }
+        return orderArr
     }
 
     /**
@@ -35,7 +65,7 @@ class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
         (0 until cnt).forEach { numArr[it] = cin.nextInt() }
 
         val result = countingNumber(numArr)
-        print(result.joinToString(" "))
+        println(result.joinToString(" "))
     }
 
     private fun countingNumber(inArr: IntArray): IntArray {
