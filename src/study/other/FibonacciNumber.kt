@@ -1,4 +1,6 @@
-package study
+package study.other
+
+import study.AbstractStudy
 
 class FibonacciNumber: AbstractStudy(FibonacciNumber::class.java.simpleName) {
 

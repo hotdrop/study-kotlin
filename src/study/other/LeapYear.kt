@@ -1,3 +1,5 @@
+package study.other
+
 import study.AbstractStudy
 import java.util.*
 

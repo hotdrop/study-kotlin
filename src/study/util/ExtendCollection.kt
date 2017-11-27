@@ -1,4 +1,6 @@
-package study
+package study.util
+
+import study.AbstractStudy
 
 class ExtendCollection: AbstractStudy(ExtendCollection::class.java.simpleName) {
 

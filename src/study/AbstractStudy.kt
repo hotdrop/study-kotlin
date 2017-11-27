@@ -1,7 +1,5 @@
 package study
 
-import java.util.*
-
 abstract class AbstractStudy(private val className: String) {
 
     fun run() {

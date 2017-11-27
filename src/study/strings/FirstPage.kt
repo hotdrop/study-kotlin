@@ -3,7 +3,7 @@ package study.strings
 import study.AbstractStudy
 import java.util.*
 
-class EasyLevelFirstPage: AbstractStudy(EasyLevelFirstPage::class.java.simpleName) {
+class FirstPage : AbstractStudy(FirstPage::class.java.simpleName) {
 
     override fun execute() {
         super.execute()

@@ -1,4 +1,6 @@
-package study
+package study.other
+
+import study.AbstractStudy
 
 class EightQuizzes: AbstractStudy(EightQuizzes::class.java.simpleName) {
 

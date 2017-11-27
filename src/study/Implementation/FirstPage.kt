@@ -1,22 +1,26 @@
-package study
+package study.Implementation
 
-import org.jetbrains.annotations.Mutable
+import study.AbstractStudy
 import study.util.PrimeFactorizations
 import java.util.*
 
-class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
+class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
-        gradingStudents()
-        calcLcmAndGcdTest()
-        betweenTwoSets()
-        breakingTheRecords()
-        birthdayChocolate()
-        divisibleSumPairs()
-        migratoryBirds()
-        dayOfTheProgrammerInput()
-        bonAppetitInput()
+
+        val targetNo = 8
+        when(targetNo) {
+            1 -> bonAppetitInput()
+            2 -> dayOfTheProgrammerInput()
+            3 -> migratoryBirds()
+            4 -> divisibleSumPairs()
+            5 -> birthdayChocolate()
+            6 -> breakingTheRecords()
+            7 -> gradingStudents()
+            8 -> betweenTwoSets()
+            else -> println("Your set number:'$targetNo' is nothing question.")
+        }
     }
 
     private fun bonAppetitInput() {
@@ -110,10 +114,10 @@ class EasyLevelImpl: AbstractStudy(EasyLevelImpl::class.java.simpleName) {
         var count = 0
 
         numbers.filterIndexed { index, _ -> index + m <= size }
-               .forEachIndexed { index, _ ->
-                   val sum = (0 until m).sumBy { numbers[it + index] }
-                   if(sum == d) count++
-               }
+                .forEachIndexed { index, _ ->
+                    val sum = (0 until m).sumBy { numbers[it + index] }
+                    if(sum == d) count++
+                }
         println(count)
     }
 
