@@ -12,13 +12,14 @@ enum class RunCode {
     LeapYear,
     FibonacciNumber,
     ImplementationFirstPage,
+    ImplementationSecondPage,
     StringFirstPage,
     SortingFirstPage,
 }
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.SortingFirstPage
+    val runCode = RunCode.ImplementationSecondPage
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()
@@ -27,6 +28,7 @@ fun main(args: Array<String>) {
         RunCode.LeapYear -> LeapYear().run()
         RunCode.FibonacciNumber -> FibonacciNumber().run()
         RunCode.ImplementationFirstPage -> study.implementation.FirstPage().run()
+        RunCode.ImplementationSecondPage -> study.implementation.SecondPage().run()
         RunCode.StringFirstPage -> study.strings.FirstPage().run()
         RunCode.SortingFirstPage -> study.sorting.FirstPage().run()
     }
