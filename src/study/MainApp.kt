@@ -26,7 +26,7 @@ fun main(args: Array<String>) {
         RunCode.ExtendCollection -> ExtendCollection().run()
         RunCode.LeapYear -> LeapYear().run()
         RunCode.FibonacciNumber -> FibonacciNumber().run()
-        RunCode.ImplementationFirstPage -> study.Implementation.FirstPage().run()
+        RunCode.ImplementationFirstPage -> study.implementation.FirstPage().run()
         RunCode.StringFirstPage -> study.strings.FirstPage().run()
         RunCode.SortingFirstPage -> study.sorting.FirstPage().run()
     }

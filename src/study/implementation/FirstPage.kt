@@ -1,4 +1,4 @@
-package study.Implementation
+package study.implementation
 
 import study.AbstractStudy
 import study.util.PrimeFactorizations
