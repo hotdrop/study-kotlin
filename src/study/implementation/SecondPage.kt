@@ -8,12 +8,43 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 2
+        val targetNo = 3
         when(targetNo) {
             1 -> sockMerchant()
             2 -> drawingBook()
+            3 -> countingValleys()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * 山登りをし、谷の数を出力する。
+     * 登りをU、降りをDとし、UとDで構成された文字列を入力とする。
+     * 0を出発点とし谷の数を数える。
+     * 谷の条件は、出発点である0より下降し再び0地点まで上がってくるところを指す。
+     * 例:
+     *  入力: UDDDUDUU
+     *  出力: 1
+     * UDDで出発点下の傾斜に入り、以降は谷底となる。再び出発点以上の標高になるのは最後のUとなる。
+     * したがって谷は1つ
+     */
+    private fun countingValleys() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val steps = cin.next()
+
+        var valleyCount = 0
+        var currentPoint = 0
+        steps.forEach {
+            when(it) {
+                'U' -> currentPoint++
+                'D' -> currentPoint--
+            }
+            if(currentPoint == 0 && it == 'U') {
+                valleyCount++
+            }
+        }
+        println(valleyCount)
     }
 
     /**
