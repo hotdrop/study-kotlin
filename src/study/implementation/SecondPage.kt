@@ -8,15 +8,46 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 5
+        val targetNo = 6
         when(targetNo) {
             1 -> sockMerchant()
             2 -> drawingBook()
             3 -> countingValleys()
             4 -> electronicsShop()
             5 -> catsAndMouse()
+            6 -> theHurdleRace()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * ジャンプレースゲームにおいて、以下を入力とする。
+     * ・ハードル数
+     * ・キャラのジャンプ力
+     * ・ハードル（入力するのは高さ）
+     * ジャンプ力がハードルの高さを超えていれば飛び越えられる。
+     * ジャンプ力が足りなければアイテムを使用しジャンプ力を1プラスできる。
+     * アイテムの効果は1回のゲームクリア時まで有効となる。
+     * クリアするため最大何回アイテムを使用すれば良いか出力する。
+     * 例:
+     * 入力:
+     *   5 4
+     *   2 5 3 7 1
+     * 出力: 3
+     * これはハードル数は5つ、ジャンプ力4となる。
+     * ハードル7を超えないとクリアできないため、アイテムを3回使用してジャンプ力を7にする必要がある。
+     * したがって、出力は3となる。
+     */
+    private fun theHurdleRace() {
+        val cin = Scanner(System.`in`)
+        val hurdleNum = cin.nextInt()
+        val jumpState = cin.nextInt()
+        val hurdles = IntArray(hurdleNum)
+        (0 until hurdleNum).forEach { hurdles[it] = cin.nextInt() }
+
+        val maxHurdleHeight = hurdles.max() ?: 0
+        val itemUseCnt = if(jumpState < maxHurdleHeight) maxHurdleHeight - jumpState else 0
+        println(itemUseCnt)
     }
 
     /**
