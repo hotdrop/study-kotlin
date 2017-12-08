@@ -8,7 +8,7 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 6
+        val targetNo = 8
         when(targetNo) {
             1 -> sockMerchant()
             2 -> drawingBook()
@@ -16,8 +16,50 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
             4 -> electronicsShop()
             5 -> catsAndMouse()
             6 -> theHurdleRace()
+            7 -> designerPDFViewer()
+            8 -> utopianTree()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * 初期は1m、夏に1m育って次の春に2倍育つ木がある。
+     * 最初の入力は数（これいつもいらないだろと思う）、次のNでサイクル数をそれぞれ入力する。
+     * 例
+     *  0: 夏1回なので結果は 1
+     *  1: 夏→春 なので結果は 2
+     *  2: 夏→春→夏 なので結果は 3
+     *  4: 夏(1m)→春(2m)→夏(3m)→春(6m)→夏(7m) となり結果は 7
+     */
+    private fun utopianTree() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val cycles = IntArray(cnt)
+        (0 until cnt).forEach { cycles[it] = cin.nextInt() }
+
+        cycles.forEach { println(growTreeMeter(it)) }
+    }
+
+    private fun growTreeMeter(cycle: Int): Int {
+        var treeHeight = 0
+        (0..cycle).forEach { treeHeight = if(it%2 == 0) treeHeight + 1 else treeHeight+treeHeight }
+        return treeHeight
+    }
+
+    /**
+     * 最初にa〜zの26個の重みを入力とする。
+     * 次に単語を入力し、最大の重みと文字数をかけた値を出力する。
+     *
+     */
+    private fun designerPDFViewer() {
+        val cin = Scanner(System.`in`)
+        val allWordPoints = IntArray(26)
+        (0 until 26).forEach { allWordPoints[it] = cin.nextInt() }
+        val words = cin.next()
+
+        val wordPoints = words.map { it.toInt() - 'a'.toInt() }.toList()
+        val maxPoint = allWordPoints.filterIndexed { index, _ -> wordPoints.any { it == index } }.max() ?: 0
+        println(maxPoint * words.length)
     }
 
     /**
