@@ -8,7 +8,7 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 8
+        val targetNo = 9
         when(targetNo) {
             1 -> sockMerchant()
             2 -> drawingBook()
@@ -18,8 +18,37 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
             6 -> theHurdleRace()
             7 -> designerPDFViewer()
             8 -> utopianTree()
+            9 -> angryProfessor()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    private data class MathClass(
+            val studentsNum: Int,
+            val thresholdStudentsNum: Int,
+            val arriveStudentTimes: IntArray)
+
+    private fun angryProfessor() {
+        val mathClasses = mutableListOf<MathClass>()
+        val cin = Scanner(System.`in`)
+        val testCase = cin.nextInt()
+        (0 until testCase).forEach {
+            val studentsNum = cin.nextInt()
+            val thresholdStudentsNum = cin.nextInt()
+            val arriveTimes = IntArray(studentsNum)
+            (0 until studentsNum).forEach { arriveTimes[it] = cin.nextInt() }
+            mathClasses.add(MathClass(studentsNum, thresholdStudentsNum, arriveTimes))
+        }
+
+        mathClasses.forEach {
+            val isCancel = isCancelClass(it.thresholdStudentsNum, it.arriveStudentTimes)
+            if(isCancel) println("YES") else println("NO")
+        }
+    }
+
+    private fun isCancelClass(thresholdStudentsNum: Int, arriveStudentTimes: IntArray): Boolean {
+        val arrivedNum = arriveStudentTimes.count { it <= 0 }
+        return arrivedNum < thresholdStudentsNum
     }
 
     /**
