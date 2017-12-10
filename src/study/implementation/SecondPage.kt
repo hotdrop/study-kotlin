@@ -23,11 +23,24 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
         }
     }
 
+    /**
+     * angryProfessorの、標準入力の値保持用のデータクラス
+     */
     private data class MathClass(
             val studentsNum: Int,
             val thresholdStudentsNum: Int,
             val arriveStudentTimes: IntArray)
 
+    /**
+     * ある大学で数学の講義を受け持つ教授がいる。
+     * 生徒はとても欠席率が高く、教授は怒って生徒の出席数が一定数を満たさなかった場合、教授は怒って講義をキャンセルすることにした。
+     * 教授が怒って講義をキャンセルする場合は「YES」、生徒数が満たされて講義を開始する場合は「NO」と出力する。
+     * 入力は以下の通り。
+     * 1行目: テストケース数
+     * 2行目: 講義を取っている生徒数 教授が講義を開く生徒数の閾値
+     * 3行目: 生徒がその講義の教室に到着するまでの時間。0を講義開始時間として、マイナスは事前について着席していた生徒、プラスは遅刻した生徒
+     *
+     */
     private fun angryProfessor() {
         val mathClasses = mutableListOf<MathClass>()
         val cin = Scanner(System.`in`)
