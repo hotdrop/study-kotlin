@@ -8,7 +8,7 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 8
+        val targetNo = 9
         when(targetNo) {
             1 -> sockMerchant()
             2 -> drawingBook()
@@ -18,8 +18,50 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
             6 -> theHurdleRace()
             7 -> designerPDFViewer()
             8 -> utopianTree()
+            9 -> angryProfessor()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * angryProfessorの、標準入力の値保持用のデータクラス
+     */
+    private data class MathClass(
+            val studentsNum: Int,
+            val thresholdStudentsNum: Int,
+            val arriveStudentTimes: IntArray)
+
+    /**
+     * ある大学で数学の講義を受け持つ教授がいる。
+     * 生徒はとても欠席率が高く、教授は怒って生徒の出席数が一定数を満たさなかった場合、教授は怒って講義をキャンセルすることにした。
+     * 教授が怒って講義をキャンセルする場合は「YES」、生徒数が満たされて講義を開始する場合は「NO」と出力する。
+     * 入力は以下の通り。
+     * 1行目: テストケース数
+     * 2行目: 講義を取っている生徒数 教授が講義を開く生徒数の閾値
+     * 3行目: 生徒がその講義の教室に到着するまでの時間。0を講義開始時間として、マイナスは事前について着席していた生徒、プラスは遅刻した生徒
+     *
+     */
+    private fun angryProfessor() {
+        val mathClasses = mutableListOf<MathClass>()
+        val cin = Scanner(System.`in`)
+        val testCase = cin.nextInt()
+        (0 until testCase).forEach {
+            val studentsNum = cin.nextInt()
+            val thresholdStudentsNum = cin.nextInt()
+            val arriveTimes = IntArray(studentsNum)
+            (0 until studentsNum).forEach { arriveTimes[it] = cin.nextInt() }
+            mathClasses.add(MathClass(studentsNum, thresholdStudentsNum, arriveTimes))
+        }
+
+        mathClasses.forEach {
+            val isCancel = isCancelClass(it.thresholdStudentsNum, it.arriveStudentTimes)
+            if(isCancel) println("YES") else println("NO")
+        }
+    }
+
+    private fun isCancelClass(thresholdStudentsNum: Int, arriveStudentTimes: IntArray): Boolean {
+        val arrivedNum = arriveStudentTimes.count { it <= 0 }
+        return arrivedNum < thresholdStudentsNum
     }
 
     /**
