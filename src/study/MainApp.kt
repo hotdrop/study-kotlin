@@ -15,11 +15,12 @@ enum class RunCode {
     ImplementationSecondPage,
     StringFirstPage,
     SortingFirstPage,
+    GraphTheoryFirstPage,
 }
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.ImplementationSecondPage
+    val runCode = RunCode.GraphTheoryFirstPage
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()
@@ -31,6 +32,7 @@ fun main(args: Array<String>) {
         RunCode.ImplementationSecondPage -> study.implementation.SecondPage().run()
         RunCode.StringFirstPage -> study.strings.FirstPage().run()
         RunCode.SortingFirstPage -> study.sorting.FirstPage().run()
+        RunCode.GraphTheoryFirstPage -> study.graphTheory.GraphFirst().run()
     }
 }
 
