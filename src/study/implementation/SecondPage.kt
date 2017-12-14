@@ -8,7 +8,7 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 9
+        val targetNo = 10
         when(targetNo) {
             1 -> sockMerchant()
             2 -> drawingBook()
@@ -19,8 +19,59 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
             7 -> designerPDFViewer()
             8 -> utopianTree()
             9 -> angryProfessor()
+            10 -> pickingNumber()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * ある数値配列を入力とする。
+     * その数値配列にて、2つの整数の差分の絶対値が1より小さくなる組み合わせの数値の最大数を出力する。
+     * 文章だと結構意味不明なので例を示す。
+     *   4 6 5 3 3 1
+     * この中で差の絶対値が1より小さくなるのは[6 5] [5 4] [4 3]の3種類の組み合わせ
+     * 3は2つあるため、この中で数値が最も多いのは[4 3 3]の3つで出力は 3 となる。
+     *
+     * 条件: 配列は必ず2つ以上の数値が入力される。
+     */
+    private fun pickingNumber() {
+        val cin =  Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val numbers = IntArray(cnt)
+        (0 until cnt).forEach { numbers[it] = cin.nextInt() }
+
+        // 先頭から順に数値を取得
+        //   前と同じ数値
+        //     カウントを取っていく
+        //   前と異なる数値 かつ 今の数値との差が1 かつ ペアフラグがOFF
+        //     ペアフラグをONにする
+        //     今のカウントを持続して次の数値をみる
+        //   前と異なる数値
+        //     今のカウントをanswerとして保持（ただしanswerの方が大きければ無視）
+        //     ペアフラグをOFFにする
+        //     カウントを初期化
+        //  ループが終了したら最後のカウントをanswerに保持（ただしanswerの方が大きければ無視）
+        val sortedNumbers = numbers.sorted()
+        var answerCnt = 0
+        // 自分が含まれるため、numCntは常に１から始まるものとする。
+        var numCnt = 1
+        var hasPair = false
+        for(idx in 1 until sortedNumbers.size) {
+            when {
+                sortedNumbers[idx] == sortedNumbers[idx-1] -> numCnt++
+                sortedNumbers[idx] == sortedNumbers[idx-1] + 1 && !hasPair -> {
+                    numCnt++
+                    hasPair = true
+                }
+                else -> {
+                    if(answerCnt < numCnt) answerCnt = numCnt
+                    hasPair = false
+                    numCnt = 1
+                }
+            }
+        }
+        if(answerCnt < numCnt) answerCnt = numCnt
+        println(answerCnt)
     }
 
     /**
