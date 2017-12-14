@@ -31,6 +31,8 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
      *   4 6 5 3 3 1
      * この中で差の絶対値が1より小さくなるのは[6 5] [5 4] [4 3]の3種類の組み合わせ
      * 3は2つあるため、この中で数値が最も多いのは[4 3 3]の3つで出力は 3 となる。
+     *
+     * 条件: 配列は必ず2つ以上の数値が入力される。
      */
     private fun pickingNumber() {
         val cin =  Scanner(System.`in`)
@@ -38,16 +40,37 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
         val numbers = IntArray(cnt)
         (0 until cnt).forEach { numbers[it] = cin.nextInt() }
 
+        // 先頭から順に数値を取得
+        //   前と同じ数値
+        //     カウントを取っていく
+        //   前と異なる数値 かつ 今の数値との差が1 かつ ペアフラグがOFF
+        //     ペアフラグをONにする
+        //     今のカウントを持続して次の数値をみる
+        //   前と異なる数値
+        //     今のカウントをanswerとして保持（ただしanswerの方が大きければ無視）
+        //     ペアフラグをOFFにする
+        //     カウントを初期化
+        //  ループが終了したら最後のカウントをanswerに保持（ただしanswerの方が大きければ無視）
+        val sortedNumbers = numbers.sorted()
         var answerCnt = 0
-        numbers.forEach { currentNum ->
-            // これやるならforで回してcntした方がいいかも・・
-            val posCnt = numbers.count { currentNum - it in 0..1 }
-            val negCnt = numbers.count { currentNum - it in -1..0 }
-            val moreCnt = if(posCnt > negCnt) posCnt else negCnt
-            if(answerCnt < moreCnt) {
-                answerCnt = moreCnt
+        // 自分が含まれるため、numCntは常に１から始まるものとする。
+        var numCnt = 1
+        var hasPair = false
+        for(idx in 1 until sortedNumbers.size) {
+            when {
+                sortedNumbers[idx] == sortedNumbers[idx-1] -> numCnt++
+                sortedNumbers[idx] == sortedNumbers[idx-1] + 1 && !hasPair -> {
+                    numCnt++
+                    hasPair = true
+                }
+                else -> {
+                    if(answerCnt < numCnt) answerCnt = numCnt
+                    hasPair = false
+                    numCnt = 1
+                }
             }
         }
+        if(answerCnt < numCnt) answerCnt = numCnt
         println(answerCnt)
     }
 
