@@ -21,7 +21,7 @@ enum class RunCode {
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.DynamicProgrammingFirst
+    val runCode = RunCode.ImplementationSecondPage
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()

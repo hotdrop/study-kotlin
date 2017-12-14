@@ -8,7 +8,7 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 9
+        val targetNo = 10
         when(targetNo) {
             1 -> sockMerchant()
             2 -> drawingBook()
@@ -19,8 +19,36 @@ class SecondPage: AbstractStudy(SecondPage::class.java.simpleName) {
             7 -> designerPDFViewer()
             8 -> utopianTree()
             9 -> angryProfessor()
+            10 -> pickingNumber()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    /**
+     * ある数値配列を入力とする。
+     * その数値配列にて、2つの整数の差分の絶対値が1より小さくなる組み合わせの数値の最大数を出力する。
+     * 文章だと結構意味不明なので例を示す。
+     *   4 6 5 3 3 1
+     * この中で差の絶対値が1より小さくなるのは[6 5] [5 4] [4 3]の3種類の組み合わせ
+     * 3は2つあるため、この中で数値が最も多いのは[4 3 3]の3つで出力は 3 となる。
+     */
+    private fun pickingNumber() {
+        val cin =  Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val numbers = IntArray(cnt)
+        (0 until cnt).forEach { numbers[it] = cin.nextInt() }
+
+        var answerCnt = 0
+        numbers.forEach { currentNum ->
+            // これやるならforで回してcntした方がいいかも・・
+            val posCnt = numbers.count { currentNum - it in 0..1 }
+            val negCnt = numbers.count { currentNum - it in -1..0 }
+            val moreCnt = if(posCnt > negCnt) posCnt else negCnt
+            if(answerCnt < moreCnt) {
+                answerCnt = moreCnt
+            }
+        }
+        println(answerCnt)
     }
 
     /**
