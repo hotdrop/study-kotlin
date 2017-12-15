@@ -14,6 +14,7 @@ enum class RunCode {
     ImplementationFirstPage,
     ImplementationSecondPage,
     StringFirstPage,
+    StringSecondPage,
     SortingFirstPage,
     GraphTheoryFirstPage,
     DynamicProgrammingFirst,
@@ -21,7 +22,7 @@ enum class RunCode {
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.ImplementationSecondPage
+    val runCode = RunCode.StringSecondPage
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()
@@ -32,6 +33,7 @@ fun main(args: Array<String>) {
         RunCode.ImplementationFirstPage -> study.implementation.FirstPage().run()
         RunCode.ImplementationSecondPage -> study.implementation.SecondPage().run()
         RunCode.StringFirstPage -> study.strings.FirstPage().run()
+        RunCode.StringSecondPage -> study.strings.SecondPage().run()
         RunCode.SortingFirstPage -> study.sorting.FirstPage().run()
         RunCode.GraphTheoryFirstPage -> study.graphTheory.GraphFirst().run()
         RunCode.DynamicProgrammingFirst -> study.dynamic.DynamicProgrammingFirst().run()
