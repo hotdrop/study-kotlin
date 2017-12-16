@@ -8,12 +8,34 @@ class SecondPage : AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 1
+        val targetNo = 2
         when(targetNo) {
             1 -> gemStones()
+            2 -> alternatingCharacters()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
     }
+
+    /**
+     * AまたはBのみで構成された文字列において、AとBが交互になるよう文字を削除した場合の
+     * 削除文字数を出力する。
+     * 例:
+     *  AAAA -> 3 AAAを削除する
+     *  ABBA -> 1 Bを削除する
+     */
+    private fun alternatingCharacters() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val strList = mutableListOf<String>()
+        (0 until cnt).forEach { strList.add(cin.next()) }
+
+        strList.forEach {
+            val delCnt = countConsecutiveChars(it)
+            println(delCnt)
+        }
+    }
+
+    private fun countConsecutiveChars(str: String) = (1 until str.length).count { str[it] == str[it -1] }
 
     /**
      * 発見した様々な岩石の構成要素を調べることとした。
