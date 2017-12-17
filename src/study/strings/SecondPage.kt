@@ -8,12 +8,31 @@ class SecondPage : AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 2
+        val targetNo = 3
         when(targetNo) {
             1 -> gemStones()
             2 -> alternatingCharacters()
+            3 -> beautifulBinaryString()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
+    }
+
+    private fun beautifulBinaryString() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val binaryStr = cin.next()
+
+        var idx = 0
+        var beautifulCnt = 0
+        while(idx < binaryStr.length - 2) {
+            idx += if(binaryStr[idx] == '0' && binaryStr[idx+1] == '1' && binaryStr[idx+2] == '0') {
+                beautifulCnt++
+                3
+            } else {
+                1
+            }
+        }
+        println(beautifulCnt)
     }
 
     /**
