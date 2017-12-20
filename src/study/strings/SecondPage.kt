@@ -8,13 +8,55 @@ class SecondPage : AbstractStudy(SecondPage::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 4
+        val targetNo = 5
         when(targetNo) {
             1 -> gemStones()
             2 -> alternatingCharacters()
             3 -> beautifulBinaryString()
             4 -> theLoveLetterMystery()
+            5 -> anagram()
             else -> println("Your set number:'$targetNo' is nothing question.")
+        }
+    }
+
+    /**
+     * 問題文が不明すぎる。
+     * 入力された文字列を2つに割って、2つの文字列がアナグラムであれば0を出力する。
+     * アナグラムでなければ、分割した文字列を「何文字変更すれば同じ文字になるか」の文字数を出力する。
+     * 2つに割れなければ−1を出力する。
+     * と思ったが違う。アナグラムではない
+     * 例:
+     *  aaabbb -> 3  : 分割すると「aaa」と「bbb」になる。全文字異なるため出力は3
+     *  abc    -> -1 : 分割できないので−1
+     *  abba   -> 0  : 分割すると「ab」と「ba」になる。アナグラムのため出力は0
+     * 例２:
+     *  上記のままだとダメなケースがある。
+     *  半分に割った1つ目の文字列で、2つ目の文字列と一致しないものを全て求める。
+     */
+    private fun anagram() {
+        val cin = Scanner(System.`in`)
+        val cnt = cin.nextInt()
+        val inputLines = mutableListOf<String>()
+        (0 until cnt).forEach { inputLines.add(cin.next()) }
+
+        inputLines.forEach { line ->
+            when(line.length%2) {
+                0 -> {
+                    val appearChar = IntArray(27)
+                    // 1つ目の文字列に含まれるアルファベットとその数を全て求める。
+                    line.substring(0, line.length/2).forEach { appearChar[it.toInt() - 'a'.toInt()]++ }
+                    // appearCharが１以上の文字に対し、2つ目の文字列を順番に調べて同じ文字があれば−１していく
+                    line.substring(line.length/2, line.length).forEach {
+                        val asciiChr = it.toInt() - 'a'.toInt()
+                        if(appearChar[asciiChr] > 0) {
+                            appearChar[asciiChr]--
+                        }
+                    }
+                    // appearCharの数をsumして出力する
+                    println(appearChar.sum())
+                }
+                else -> println(-1)
+            }
         }
     }
 
