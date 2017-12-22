@@ -3,12 +3,12 @@ package study.graphTheory
 import study.AbstractStudy
 import java.util.*
 
-class GraphFirst: AbstractStudy(GraphFirst::class.java.simpleName) {
+class GraphTheory : AbstractStudy(GraphTheory::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
         val targetNo = 1
-        when(targetNo) {
+        when (targetNo) {
             1 -> journeyToTheMoon()
             else -> println("Your set number:'$targetNo' is nothing question.")
         }
@@ -43,15 +43,10 @@ class GraphFirst: AbstractStudy(GraphFirst::class.java.simpleName) {
             sameCountryPair.add(SameCountryPair(cin.nextInt(), cin.nextInt()))
         }
 
-        val allPairNum = calcPairNum(astronautsNum.toLong())
+        val allPairNum = GraphTheoryUtility.calcPairCombinationNum(astronautsNum.toLong())
         val sameCountryPairNum = calcSameCountryPairNum(astronautsNum, sameCountryPair)
         println(allPairNum - sameCountryPairNum)
     }
-
-    /**
-     * 引数で指定された数値の総ペア数を求める。
-     */
-    private fun calcPairNum(num: Long) = (num * (num - 1))/2
 
     /**
      * 同じ国のペアを計算する。
@@ -72,12 +67,14 @@ class GraphFirst: AbstractStudy(GraphFirst::class.java.simpleName) {
             val num2Group = sameCountryGroup[it.num2]
             val groupNo = when {
                 num1Group == 0 && num2Group == 0 -> ++maxGroupNo
-                num1Group == 0 || num2Group == 0 -> { if(num1Group != 0) num1Group else num2Group }
+                num1Group == 0 || num2Group == 0 -> {
+                    if (num1Group != 0) num1Group else num2Group
+                }
                 else -> {
                     // すでに両方がいずれかのグループに属している場合、片方のグループに寄せる。
                     // ここではnum2のグループを全てnum1のグループにする。
                     sameCountryGroup.forEachIndexed { index, i ->
-                        if(i == num2Group) {
+                        if (i == num2Group) {
                             sameCountryGroup[index] = num1Group
                         }
                     }
@@ -92,7 +89,7 @@ class GraphFirst: AbstractStudy(GraphFirst::class.java.simpleName) {
         // sameCountryGroupで同じグループ番号のカウントをとって取りうるペア数の合計を求める。
         val sameCountryGroupNum = sameCountryGroup.filter { it > 0 }.groupBy { it }
         var pairCnt = 0L
-        sameCountryGroupNum.forEach { _, u -> pairCnt += calcPairNum(u.size.toLong()) }
+        sameCountryGroupNum.forEach { _, u -> pairCnt += GraphTheoryUtility.calcPairCombinationNum(u.size.toLong()) }
         return pairCnt
     }
 

@@ -1,4 +1,4 @@
-package study.util
+package study.implementation
 
 /**
  * 素因数分解及び約数、指数を算出するユーティリティクラス

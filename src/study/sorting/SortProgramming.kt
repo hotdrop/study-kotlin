@@ -4,7 +4,7 @@ import study.AbstractStudy
 import java.math.BigInteger
 import java.util.*
 
-class FirstPage: AbstractStudy(FirstPage::class.java.simpleName) {
+class SortProgramming : AbstractStudy(SortProgramming::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
