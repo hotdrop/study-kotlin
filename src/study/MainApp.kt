@@ -1,8 +1,13 @@
 package study
 
+import study.dynamic.DynamicProgramming
+import study.graphTheory.GraphTheory
+import study.implementation.ImplementationProgramming
 import study.other.FibonacciNumber
 import study.other.FizzBuzz
 import study.other.LeapYear
+import study.sorting.SortProgramming
+import study.strings.StringProgramming
 import study.util.ExtendCollection
 
 enum class RunCode {
@@ -11,18 +16,16 @@ enum class RunCode {
     ExtendCollection,
     LeapYear,
     FibonacciNumber,
-    ImplementationFirstPage,
-    ImplementationSecondPage,
-    StringFirstPage,
-    StringSecondPage,
-    SortingFirstPage,
-    GraphTheoryFirstPage,
-    DynamicProgrammingFirst,
+    ImplementationProgramming,
+    StringProgramming,
+    SortProgramming,
+    GraphTheory,
+    DynamicProgramming,
 }
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.StringSecondPage
+    val runCode = RunCode.StringProgramming
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()
@@ -30,13 +33,11 @@ fun main(args: Array<String>) {
         RunCode.ExtendCollection -> ExtendCollection().run()
         RunCode.LeapYear -> LeapYear().run()
         RunCode.FibonacciNumber -> FibonacciNumber().run()
-        RunCode.ImplementationFirstPage -> study.implementation.ImplementationProgramming().run()
-        RunCode.ImplementationSecondPage -> study.implementation.SecondPage().run()
-        RunCode.StringFirstPage -> study.strings.StringProgramming().run()
-        RunCode.StringSecondPage -> study.strings.SecondPage().run()
-        RunCode.SortingFirstPage -> study.sorting.SortProgramming().run()
-        RunCode.GraphTheoryFirstPage -> study.graphTheory.GraphTheory().run()
-        RunCode.DynamicProgrammingFirst -> study.dynamic.DynamicProgramming().run()
+        RunCode.ImplementationProgramming -> ImplementationProgramming().run()
+        RunCode.StringProgramming -> StringProgramming().run()
+        RunCode.SortProgramming -> SortProgramming().run()
+        RunCode.GraphTheory -> GraphTheory().run()
+        RunCode.DynamicProgramming -> DynamicProgramming().run()
     }
 }
 
