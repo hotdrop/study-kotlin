@@ -30,13 +30,13 @@ fun main(args: Array<String>) {
         RunCode.ExtendCollection -> ExtendCollection().run()
         RunCode.LeapYear -> LeapYear().run()
         RunCode.FibonacciNumber -> FibonacciNumber().run()
-        RunCode.ImplementationFirstPage -> study.implementation.FirstPage().run()
+        RunCode.ImplementationFirstPage -> study.implementation.ImplementationProgramming().run()
         RunCode.ImplementationSecondPage -> study.implementation.SecondPage().run()
-        RunCode.StringFirstPage -> study.strings.FirstPage().run()
+        RunCode.StringFirstPage -> study.strings.StringProgramming().run()
         RunCode.StringSecondPage -> study.strings.SecondPage().run()
-        RunCode.SortingFirstPage -> study.sorting.FirstPage().run()
-        RunCode.GraphTheoryFirstPage -> study.graphTheory.GraphFirst().run()
-        RunCode.DynamicProgrammingFirst -> study.dynamic.DynamicProgrammingFirst().run()
+        RunCode.SortingFirstPage -> study.sorting.SortProgramming().run()
+        RunCode.GraphTheoryFirstPage -> study.graphTheory.GraphTheory().run()
+        RunCode.DynamicProgrammingFirst -> study.dynamic.DynamicProgramming().run()
     }
 }
 
