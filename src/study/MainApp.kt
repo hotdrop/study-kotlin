@@ -2,8 +2,10 @@ package study
 
 import study.dynamic.DynamicProgramming
 import study.graphTheory.GraphTheory
+import study.implementation.ImplAlgorithms
 import study.implementation.ImplementationProgramming
 import study.network.HttpConnect
+import study.other.Composition
 import study.other.FibonacciNumber
 import study.other.FizzBuzz
 import study.other.LeapYear
@@ -18,16 +20,18 @@ enum class RunCode {
     LeapYear,
     FibonacciNumber,
     ImplementationProgramming,
+    ImplAlgorithms,
     StringProgramming,
     SortProgramming,
     GraphTheory,
     DynamicProgramming,
     Network,
+    Compose,
 }
 
 fun main(args: Array<String>) {
 
-    val runCode = RunCode.Network
+    val runCode = RunCode.ImplAlgorithms
 
     when(runCode) {
         RunCode.BasicSyntax -> BasicSyntax().run()
@@ -36,12 +40,12 @@ fun main(args: Array<String>) {
         RunCode.LeapYear -> LeapYear().run()
         RunCode.FibonacciNumber -> FibonacciNumber().run()
         RunCode.ImplementationProgramming -> ImplementationProgramming().run()
+        RunCode.ImplAlgorithms -> ImplAlgorithms().run()
         RunCode.StringProgramming -> StringProgramming().run()
         RunCode.SortProgramming -> SortProgramming().run()
         RunCode.GraphTheory -> GraphTheory().run()
         RunCode.DynamicProgramming -> DynamicProgramming().run()
         RunCode.Network -> HttpConnect().run()
+        RunCode.Compose -> Composition().run()
     }
 }
-
-
