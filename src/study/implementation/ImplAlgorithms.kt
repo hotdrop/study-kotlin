@@ -7,11 +7,13 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 3
+        val targetNo = 5
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
             3 -> execSaveThePrisoner()
+            4 -> execCircularArrayRotation()
+            5 -> execSequenceEquation()
         }
     }
 
@@ -82,4 +84,61 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
                 }
             }
         }
+
+    private fun execCircularArrayRotation() {
+        val results = circularArrayRotation(arrayOf(1,2,3), 2, arrayOf(0,1,2))
+        if (results[0] == 2 && results[1] == 3 && results[2] == 1) {
+            println("Success!")
+        } else {
+            println("Failure...${results[0]} ${results[1]} ${results[2]}")
+        }
+    }
+
+    private fun circularArrayRotation(a: Array<Int>, k: Int, queries: Array<Int>): Array<Int> {
+        val rotate = if (a.size < k) k % a.size else k
+        return (a.takeLast(rotate) + a.copyOfRange(0, a.size - rotate)).let { arrayWithRotation ->
+            queries.map {
+                arrayWithRotation[it]
+            }.toTypedArray()
+        }
+    }
+
+    private fun execSequenceEquation() {
+
+        fun checkResults(success: Boolean) {
+            if (success) {
+                println("Success!")
+            } else {
+                throw IllegalStateException("Failure...")
+            }
+        }
+
+        var success = true
+        arrayOf(4, 2, 5, 1, 3).zip(sequenceEquation(arrayOf(5, 2, 1, 3, 4))).forEach {
+            if (it.first != it.second) {
+                println("Not Answer! Answer = ${it.first} calcResult = ${it.second}")
+                success = false
+            }
+        }
+        checkResults(success)
+        arrayOf(2, 3, 1).zip(sequenceEquation(arrayOf(2, 3, 1))).forEach {
+            if (it.first != it.second) {
+                println("Not Answer! Answer = ${it.first} calcResult = ${it.second}")
+                success = false
+            }
+        }
+        checkResults(success)
+        arrayOf(1, 3, 5, 4, 2).zip(sequenceEquation(arrayOf(4, 3, 5, 1, 2))).forEach {
+            if (it.first != it.second) {
+                println("Not Answer! Answer = ${it.first} calcResult = ${it.second}")
+                success = false
+            }
+        }
+
+    }
+
+    private fun sequenceEquation(p: Array<Int>): Array<Int> =
+        (0 until p.size).map { p.indexOf(it + 1) + 1 }
+                .map { p.indexOf(it) + 1 }
+                .toTypedArray()
 }
