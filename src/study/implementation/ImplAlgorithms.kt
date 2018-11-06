@@ -7,13 +7,14 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 5
+        val targetNo = 6
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
             3 -> execSaveThePrisoner()
             4 -> execCircularArrayRotation()
             5 -> execSequenceEquation()
+            6 -> execJumpingOnTheClouds()
         }
     }
 
@@ -141,4 +142,35 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         (0 until p.size).map { p.indexOf(it + 1) + 1 }
                 .map { p.indexOf(it) + 1 }
                 .toTypedArray()
+
+    private fun execJumpingOnTheClouds() {
+        jumpingOnClouds(arrayOf(0,0,1,0), 2).run {
+            if (this != 96) {
+                println("Case1 Failure.. your answer = $this . correct answer = 96")
+                return
+            }
+        }
+        jumpingOnClouds(arrayOf(0,0,1,0,0,1,1,0), 2).run {
+            if (this != 92) {
+                println("Case2 Failure.. your answer = $this . correct answer = 92")
+                return
+            }
+        }
+        jumpingOnClouds(arrayOf(1,1,1,0,1,1,0,0,0,0), 3).run {
+            if (this != 94) {
+                println("Case3 Failure.. your answer = $this . correct answer = 94")
+                return
+            }
+        }
+    }
+
+    private fun jumpingOnClouds(c: Array<Int>, k: Int): Int {
+        var baseStep = c.size / k
+        if (c.size % k != 0) {
+            baseStep += 1
+        }
+        val thunderCloudCount = c.filterIndexed {index, i -> index % k == 0 && i == 1}.sum()
+
+        return 100 - (baseStep + (thunderCloudCount * 2))
+    }
 }
