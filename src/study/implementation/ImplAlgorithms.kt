@@ -7,7 +7,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 6
+        val targetNo = 7
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -15,6 +15,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             4 -> execCircularArrayRotation()
             5 -> execSequenceEquation()
             6 -> execJumpingOnTheClouds()
+            7 -> execFindDigits()
         }
     }
 
@@ -173,4 +174,31 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
 
         return 100 - (baseStep + (thunderCloudCount * 2))
     }
+
+    fun execFindDigits() {
+        findDigits(12).run {
+            if (this != 2) {
+                println("Case1 Failure.. your answer = $this correct = 2")
+                return
+            }
+        }
+        findDigits(111).run {
+            if (this != 3) {
+                println("Case2 Failure.. your answer = $this correct = 3")
+                return
+            }
+        }
+        findDigits(1012).run {
+            if (this != 3) {
+                println("Case3 Failure.. your answer = $this correct = 3")
+                return
+            }
+        }
+        println("Success!")
+    }
+
+    fun findDigits(n: Int): Int =
+         n.toString().map(Character::getNumericValue)
+                .filter { it != 0 && n % it == 0 }
+                .count()
 }
