@@ -7,7 +7,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 7
+        val targetNo = 8
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -16,6 +16,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             5 -> execSequenceEquation()
             6 -> execJumpingOnTheClouds()
             7 -> execFindDigits()
+            8 -> exeCutTheSticks()
         }
     }
 
@@ -175,7 +176,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         return 100 - (baseStep + (thunderCloudCount * 2))
     }
 
-    fun execFindDigits() {
+    private fun execFindDigits() {
         findDigits(12).run {
             if (this != 2) {
                 println("Case1 Failure.. your answer = $this correct = 2")
@@ -197,8 +198,43 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         println("Success!")
     }
 
-    fun findDigits(n: Int): Int =
+    private fun findDigits(n: Int): Int =
          n.toString().map(Character::getNumericValue)
                 .filter { it != 0 && n % it == 0 }
                 .count()
+
+    private fun exeCutTheSticks() {
+        cutTheSticks(arrayOf(1,2,3)).run {
+            if (!this.contentEquals(arrayOf(3,2,1))) {
+                println("case1 fauilure.. ${this.forEach(::println)}")
+                return
+            }
+        }
+        cutTheSticks(arrayOf(5,4,4,2,2,8)).run {
+            if (!this.contentEquals(arrayOf(6,4,2,1))) {
+                println("case2 fauilure.. ${this.forEach(::println)}")
+                return
+            }
+        }
+        cutTheSticks(arrayOf(1,2,3,4,3,3,2,1)).run {
+            if (!this.contentEquals(arrayOf(8,6,4,1))) {
+                println("case3 fauilure.. ${this.forEach(::println)}")
+                return
+            }
+        }
+        println("Success!!!")
+    }
+
+    private fun cutTheSticks(arr: Array<Int>): Array<Int> {
+        val results = mutableListOf<Int>()
+        var localArr = arr.toList()
+
+        while (localArr.isNotEmpty()) {
+            results.add(localArr.size)
+            val minVal = localArr.min() ?: break
+            localArr = localArr.map { it - minVal }.filter { it > 0 }
+        }
+
+        return results.toTypedArray()
+    }
 }
