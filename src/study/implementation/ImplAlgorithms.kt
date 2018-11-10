@@ -7,7 +7,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 8
+        val targetNo = 9
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -17,6 +17,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             6 -> execJumpingOnTheClouds()
             7 -> execFindDigits()
             8 -> exeCutTheSticks()
+            9 -> execRepeatedString()
         }
     }
 
@@ -236,5 +237,49 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         }
 
         return results.toTypedArray()
+    }
+
+    private fun execRepeatedString() {
+        repeatedString("abcab", 10).run {
+            if (this != 4L) {
+                println("case1 failure.. $this")
+                return
+            }
+        }
+        repeatedString("aba", 10).run {
+            if (this != 7L) {
+                println("case2 failure.. $this")
+                return
+            }
+        }
+        repeatedString("a", 1000000000000).run {
+            if (this != 1000000000000L) {
+                println("case3 failure.. $this")
+                return
+            }
+        }
+        repeatedString("gfcaaaecbg", 547602).run {
+            if (this != 164280L) {
+                println("case4 failure.. $this")
+                return
+            }
+        }
+        println("Success!!")
+    }
+
+    private fun repeatedString(s: String, n: Long): Long {
+
+        fun countTargetChar(target: String) = target.count { it == 'a' }
+
+        s.length.let {  len ->
+            return if ((n % len) == 0L) {
+                countTargetChar(s) * (n / len)
+            } else {
+                val remainStr = s.substring(0, (n % len).toInt())
+                println("remainStr = $remainStr")
+                val moreCntBya = countTargetChar(remainStr)
+                countTargetChar(s) * (n / len) + moreCntBya
+            }
+        }
     }
 }
