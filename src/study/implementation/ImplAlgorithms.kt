@@ -206,19 +206,19 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     private fun exeCutTheSticks() {
         cutTheSticks(arrayOf(1,2,3)).run {
             if (!this.contentEquals(arrayOf(3,2,1))) {
-                println("case1 fauilure.. ${this.forEach(::println)}")
+                println("case1 failure.. ${this.forEach(::println)}")
                 return
             }
         }
         cutTheSticks(arrayOf(5,4,4,2,2,8)).run {
             if (!this.contentEquals(arrayOf(6,4,2,1))) {
-                println("case2 fauilure.. ${this.forEach(::println)}")
+                println("case2 failure.. ${this.forEach(::println)}")
                 return
             }
         }
         cutTheSticks(arrayOf(1,2,3,4,3,3,2,1)).run {
             if (!this.contentEquals(arrayOf(8,6,4,1))) {
-                println("case3 fauilure.. ${this.forEach(::println)}")
+                println("case3 failure.. ${this.forEach(::println)}")
                 return
             }
         }
