@@ -7,7 +7,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 9
+        val targetNo = 10
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -18,6 +18,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             7 -> execFindDigits()
             8 -> exeCutTheSticks()
             9 -> execRepeatedString()
+            10 -> execLibraryFine()
         }
     }
 
@@ -269,17 +270,78 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
 
     private fun repeatedString(s: String, n: Long): Long {
 
-        fun countTargetChar(target: String) = target.count { it == 'a' }
+        fun countChar(target: String) = target.count { it == 'a' }
 
-        s.length.let {  len ->
-            return if ((n % len) == 0L) {
-                countTargetChar(s) * (n / len)
-            } else {
-                val remainStr = s.substring(0, (n % len).toInt())
-                println("remainStr = $remainStr")
-                val moreCntBya = countTargetChar(remainStr)
-                countTargetChar(s) * (n / len) + moreCntBya
+        var result = countChar(s) * (n / s.length)
+        if ((n % s.length) != 0L) {
+            val remainStr = s.substring(0, (n % s.length).toInt())
+            result += countChar(remainStr)
+        }
+        return result
+    }
+
+    private fun execLibraryFine() {
+        libraryFine(6, 6 , 2015, 6, 6, 2015).run {
+            if (this != 0) {
+                println("case1 failure.. $this")
+                return
             }
+        }
+        libraryFine(9, 6 , 2015, 6, 6, 2015).run {
+            if (this != 45) {
+                println("case2 failure.. $this")
+                return
+            }
+        }
+        libraryFine(9, 12, 2017, 4, 7, 2017).run {
+            if (this != 2500) {
+                println("case3 failure.. $this")
+                return
+            }
+        }
+        libraryFine(1, 1, 2018, 12 , 31, 2017).run {
+            if (this != 10000) {
+                println("case4 failure.. $this")
+                return
+            }
+        }
+        libraryFine(3, 4, 3000, 3, 4, 20).run {
+            if (this != 29800000) {
+                println("case5 failure.. $this")
+                return
+            }
+        }
+        libraryFine(1, 12, 2017, 1, 1, 2018).run {
+            if (this != 0) {
+                println("case6 failure.. $this")
+                return
+            }
+        }
+        println("Success!")
+    }
+
+    private fun libraryFine(d1: Int, m1: Int, y1: Int, d2: Int, m2: Int, y2: Int): Int {
+
+        fun calcMonth(): Int {
+
+            fun calcDay(): Int =
+                when {
+                    d1 > d2 -> (d1 - d2) * 15
+                    else -> 0
+                }
+
+            return when {
+                m1 == m2 -> calcDay()
+                m1 > m2 -> (m1 - m2) * 500
+                else -> 0
+            }
+        }
+
+        return when {
+            y1 == y2 -> calcMonth()
+            y1 > y2 -> (y1 - y2) * 10000
+            else -> 0
+
         }
     }
 }
