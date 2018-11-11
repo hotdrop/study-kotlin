@@ -14,7 +14,6 @@ import study.strings.StringProgramming
 import study.util.ExtendCollection
 
 enum class RunCode {
-    BasicSyntax,
     FizzBuzz,
     ExtendCollection,
     LeapYear,
@@ -34,7 +33,6 @@ fun main(args: Array<String>) {
     val runCode = RunCode.ImplAlgorithms
 
     when(runCode) {
-        RunCode.BasicSyntax -> BasicSyntax().run()
         RunCode.FizzBuzz -> FizzBuzz().run()
         RunCode.ExtendCollection -> ExtendCollection().run()
         RunCode.LeapYear -> LeapYear().run()

@@ -441,7 +441,6 @@ class ImplementationProgramming : AbstractStudy(ImplementationProgramming::class
      */
     private fun countingValleys() {
         val cin = Scanner(System.`in`)
-        val cnt = cin.nextInt()
         val steps = cin.next()
 
         var valleyCount = 0

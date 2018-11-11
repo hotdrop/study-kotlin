@@ -23,7 +23,10 @@ class ExtendCollection: AbstractStudy(ExtendCollection::class.java.simpleName) {
             v.forEach { println(it.value) }
         }
 
-        val v = mutableListOf(Elem(1, "1"), Elem(2, "2"), Elem(3, "3"))
+        val v = mutableListOf(
+                Elem(1, "1"),
+                Elem(2, "2"),
+                Elem(3, "3"))
         print(v)
 
         val newVal = Elem(2, "4")
@@ -31,7 +34,12 @@ class ExtendCollection: AbstractStudy(ExtendCollection::class.java.simpleName) {
         print(v)
     }
 
-    inner class Elem(private var id: Int, var value: String) {
+    data class Elem(var id: Int, var value: String) {
         override fun equals(other: Any?): Boolean = (other as Elem).id == id || super.equals(other)
+        override fun hashCode(): Int {
+            var result = id
+            result = 31 * result + value.hashCode()
+            return result
+        }
     }
 }

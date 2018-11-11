@@ -24,10 +24,10 @@ class EightQuizzes: AbstractStudy(EightQuizzes::class.java.simpleName) {
 
     private fun two() {
         println("-- Question two test start --")
-        (1..5).forEach({ i ->
+        (1..5).forEach { i ->
             if(i > 3) return
             println(i)
-        })
+        }
         println("Done!")
     }
 
@@ -43,6 +43,7 @@ class EightQuizzes: AbstractStudy(EightQuizzes::class.java.simpleName) {
         println(C.x)
     }
 
+    @Suppress("USELESS_IS_CHECK", "UNREACHABLE_CODE", "RedundantObjectTypeCheck")
     private fun five() {
         println("-- Question five test start --")
         println(Unit is Unit)

@@ -181,7 +181,7 @@ class StringProgramming : AbstractStudy(StringProgramming::class.java.simpleName
                         charCountMap.replace(c, count)
                     }
                 } else {
-                    charCountMap.put(c, count)
+                    charCountMap[c] = count
                 }
                 count = 1
             }
@@ -335,7 +335,6 @@ class StringProgramming : AbstractStudy(StringProgramming::class.java.simpleName
     private fun caesarCipher() {
         val cin = Scanner(System.`in`)
 
-        val len = cin.next().toInt()
         val s = cin.next()
         val key = cin.next().toInt()
 
@@ -374,7 +373,6 @@ class StringProgramming : AbstractStudy(StringProgramming::class.java.simpleName
      */
     private fun twoCharacters() {
         val cin = Scanner(System.`in`)
-        val strLength = cin.next().toInt()
         val str = cin.next().toString()
 
         // 文字をKey、文字数をValueとしてMapを作成する
@@ -414,7 +412,7 @@ class StringProgramming : AbstractStudy(StringProgramming::class.java.simpleName
             if(charMap.containsKey(c)) {
                 charMap[c]?.let { charMap.replace(c, it + 1) }
             } else {
-                charMap.put(c, 1)
+                charMap[c] = 1
             }
         }
         return charMap
@@ -573,7 +571,6 @@ class StringProgramming : AbstractStudy(StringProgramming::class.java.simpleName
 
     private fun beautifulBinaryString() {
         val cin = Scanner(System.`in`)
-        val cnt = cin.nextInt()
         val binaryStr = cin.next()
 
         var idx = 0
