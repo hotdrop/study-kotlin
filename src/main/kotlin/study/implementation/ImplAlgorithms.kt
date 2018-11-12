@@ -7,7 +7,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 10
+        val targetNo = 11
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -19,6 +19,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             8 -> exeCutTheSticks()
             9 -> execRepeatedString()
             10 -> execLibraryFine()
+            11 -> execEqualizeArray()
         }
     }
 
@@ -58,7 +59,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         return cumulative
     }
 
-    fun execSaveThePrisoner() {
+    private fun execSaveThePrisoner() {
         saveThePrisoner(5, 2, 1).run { if (this != 2) throw IllegalStateException("case1 $this != 2") }
         saveThePrisoner(7, 19, 2).run { if (this != 6) throw IllegalStateException("case2 $this != 6") }
         saveThePrisoner(100, 1, 10).run { if (this != 10) throw IllegalStateException("case3 $this != 10") }
@@ -343,5 +344,62 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             else -> 0
 
         }
+    }
+
+    private fun execEqualizeArray() {
+        equalizeArray(arrayOf(1,2,2,3)).run {
+            if (this != 2) {
+                println("case1 failure.. $this")
+                return
+            }
+        }
+        equalizeArray(arrayOf(3,3,2,1,3)).run {
+            if (this != 2) {
+                println("case2 failure.. $this")
+                return
+            }
+        }
+        equalizeArray(arrayOf(3)).run {
+            if (this != 0) {
+                println("case3 failure.. $this")
+                return
+            }
+        }
+        equalizeArray(arrayOf(5,2,3,6654,12,484375843,8,9,0,1,4)).run {
+            if (this != 10) {
+                println("case4 failure.. $this")
+                return
+            }
+        }
+        println("Success!")
+    }
+
+    private fun equalizeArray(arr: Array<Int>): Int {
+
+        var mostNumberCount = 0
+        var prevNumber: Int? = null
+        var numberCount = 0
+
+        arr.sortedArray().forEach { currentNumber ->
+
+            if (prevNumber == null) {
+                numberCount = 1
+                mostNumberCount = 1
+                prevNumber = currentNumber
+            } else {
+                when (prevNumber) {
+                    currentNumber -> numberCount += 1
+                    else -> {
+                        numberCount = 1
+                        prevNumber = currentNumber
+                    }
+                }
+            }
+            if (mostNumberCount < numberCount) {
+                mostNumberCount = numberCount
+            }
+        }
+
+        return arr.size - mostNumberCount
     }
 }
