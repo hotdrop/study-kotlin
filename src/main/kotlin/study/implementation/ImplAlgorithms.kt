@@ -7,7 +7,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 11
+        val targetNo = 12
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -20,6 +20,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             9 -> execRepeatedString()
             10 -> execLibraryFine()
             11 -> execEqualizeArray()
+            12 -> execJumpingOnTheCloud2()
         }
     }
 
@@ -401,5 +402,40 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         }
 
         return arr.size - mostNumberCount
+    }
+
+    private fun execJumpingOnTheCloud2() {
+        jumpingOnClouds2(arrayOf(0,1,0,0,0,1,0)).run {
+            if (this != 3) {
+                println("Case1 Failure.. your answer = $this . correct answer = 3")
+                return
+            }
+        }
+        jumpingOnClouds2(arrayOf(0,0,1,0,0,1,0)).run {
+            if (this != 4) {
+                println("Case2 Failure.. your answer = $this . correct answer = 4")
+                return
+            }
+        }
+        jumpingOnClouds2(arrayOf(0,0,0,0,1,0)).run {
+            if (this != 3) {
+                println("Case3 Failure.. your answer = $this . correct answer = 3")
+                return
+            }
+        }
+        println("Success!")
+    }
+
+    private fun jumpingOnClouds2(c: Array<Int>): Int {
+
+        fun isSuperJumpFrom(index: Int) = index + 2 <= c.size - 1 && c[index + 2] == 0
+
+        var takes = 0
+        var currentIndex = 0
+        while (currentIndex < c.size - 1) {
+            currentIndex += if (isSuperJumpFrom(currentIndex)) 2 else 1
+            takes += 1
+        }
+        return takes
     }
 }
