@@ -7,7 +7,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 12
+        val targetNo = 13
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -21,6 +21,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             10 -> execLibraryFine()
             11 -> execEqualizeArray()
             12 -> execJumpingOnTheCloud2()
+            13 -> execAcmTeam()
         }
     }
 
@@ -438,4 +439,48 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         }
         return takes
     }
+
+    private fun execAcmTeam() {
+        arrayOf("10101", "11100", "11010", "00101").run {
+            val result = acmTeam(this)
+            if (result[0] != 5 || result[1] != 2) {
+                println("Case1 Failure.. your answer = ${result[0]} ${result[1]}")
+                return
+            }
+        }
+        arrayOf("11101", "10101", "11001", "10111", "10000", "01110").run {
+            val result = acmTeam(this)
+            if (result[0] != 5 || result[1] != 6) {
+                println("Case2 Failure.. your answer = ${result[0]} ${result[1]}")
+                return
+            }
+        }
+        println("Success!")
+    }
+    private fun acmTeam(topic: Array<String>): Array<Int> {
+
+        fun countByOR(s1: String, s2: String): Int =
+                (0 until s1.length)
+                        .filter { s1[it] == '1' || s2[it] == '1' }
+                        .count()
+
+        var knownFieldCount = 0
+        var pairCount = 0
+        for (outIndex in 0 until topic.size) {
+            for (inIndex in outIndex until topic.size) {
+                val cnt = countByOR(topic[outIndex], topic[inIndex])
+                when {
+                    knownFieldCount < cnt -> {
+                        knownFieldCount = cnt
+                        pairCount = 1
+                    }
+                    knownFieldCount == cnt -> {
+                        pairCount += 1
+                    }
+                }
+            }
+        }
+        return arrayOf(knownFieldCount, pairCount)
+    }
+
 }
