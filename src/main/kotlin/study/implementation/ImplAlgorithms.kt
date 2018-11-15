@@ -7,7 +7,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
     override fun execute() {
         super.execute()
 
-        val targetNo = 13
+        val targetNo = 14
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -22,6 +22,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             11 -> execEqualizeArray()
             12 -> execJumpingOnTheCloud2()
             13 -> execAcmTeam()
+            14 -> execTotalPayCost()
         }
     }
 
@@ -483,4 +484,42 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         return arrayOf(knownFieldCount, pairCount)
     }
 
+    private fun execTotalPayCost() {
+        totalPayCost(10, 10, 1, 1, 1).run {
+            if (this != 20) {
+                println("Case1 Failure.. your answer = $this")
+                return
+            }
+        }
+        totalPayCost(5, 9, 2, 3, 4).run {
+            if (this != 37) {
+                println("Case2 Failure.. your answer = $this")
+                return
+            }
+        }
+        totalPayCost(3, 6, 9, 1, 1).run {
+            if (this != 12) {
+                println("Case3 Failure.. your answer = $this")
+                return
+            }
+        }
+        totalPayCost(7, 7, 4, 2, 1).run {
+            if (this != 35) {
+                println("Case4 Failure.. your answer = $this")
+                return
+            }
+        }
+        totalPayCost(3, 3, 1, 9, 2).run {
+            if (this != 12) {
+                println("Case5 Failure.. your answer = $this")
+                return
+            }
+        }
+        println("Success!")
+    }
+    private fun totalPayCost(b: Int, w: Int, bc: Int, wc: Int, z: Int): Int {
+        val useBCost = if (bc > wc) if (bc > wc + z) wc + z else bc else bc
+        val useWCost = if (wc > bc) if (wc > bc + z) bc + z else wc else wc
+        return b * useBCost + w * useWCost
+    }
 }
