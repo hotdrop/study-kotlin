@@ -1,13 +1,14 @@
 package study.implementation
 
 import study.AbstractStudy
+import kotlin.math.absoluteValue
 
 class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
 
-        val targetNo = 14
+        val targetNo = 15
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -23,6 +24,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             12 -> execJumpingOnTheCloud2()
             13 -> execAcmTeam()
             14 -> execTotalPayCost()
+            15 -> execMinimumDistances()
         }
     }
 
@@ -517,9 +519,96 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
         }
         println("Success!")
     }
+
     private fun totalPayCost(b: Int, w: Int, bc: Int, wc: Int, z: Int): Int {
         val useBCost = if (bc > wc) if (bc > wc + z) wc + z else bc else bc
         val useWCost = if (wc > bc) if (wc > bc + z) bc + z else wc else wc
         return b * useBCost + w * useWCost
+    }
+
+    private fun execMinimumDistances() {
+        minimumDistances(arrayOf(3,2,1,2,3)).run {
+            if (this != 2) {
+                println("Case1 Failure.. your answer = $this")
+                return
+            }
+        }
+        minimumDistances(arrayOf(7,1,3,4,1,7)).run {
+            if (this != 3) {
+                println("Case2 Failure.. your answer = $this")
+                return
+            }
+        }
+        minimumDistances(arrayOf(1,1,2,2)).run {
+            if (this != 1) {
+                println("Case3 Failure.. your answer = $this")
+                return
+            }
+        }
+        minimumDistances(arrayOf(1,1,1,1)).run {
+            if (this != 1) {
+                println("Case4 Failure.. your answer = $this")
+                return
+            }
+        }
+        minimumDistances(arrayOf(4,7,4,7,7)).run {
+            if (this != 1) {
+                println("Case5 Failure.. your answer = $this")
+                return
+            }
+        }
+        minimumDistances(arrayOf(1,1)).run {
+            if (this != 1) {
+                println("Case6 Failure.. your answer = $this")
+                return
+            }
+        }
+        println("Success!!")
+    }
+
+    private fun minimumDistances(a: Array<Int>): Int {
+        val alreadyValues = mutableListOf<Int>()
+        var distances: MutableList<Int>? = null
+        for (index in 0 until a.size - 1) {
+            val currentValue = a[index]
+
+            if (alreadyValues.contains(currentValue)) {
+                println("すでに $currentValue は走査済みなので除外")
+                continue
+            }
+            val minDistance = calcMinDistance(currentValue, index, a)
+            if (minDistance == -1) {
+                continue
+            }
+            if (distances == null) {
+                distances = mutableListOf<Int>().apply { add(minDistance) }
+            } else {
+                distances.add(minDistance)
+            }
+            alreadyValues.add(currentValue)
+        }
+        // ツーペアじゃなくていいらしい・・・・・・わからん。
+        return distances?.min() ?: -1
+    }
+
+    private fun calcMinDistance(value: Int, startIdx: Int, a: Array<Int>): Int {
+        var findValueIndex = startIdx
+        var currentIdx = startIdx + 1
+        var distance = -1
+        while (currentIdx < a.size) {
+            if (a[currentIdx] == value) {
+
+                val newDistance = currentIdx - findValueIndex
+                println("$value と同じ値を発見 distance=$newDistance")
+                // 最初に見つけた場合、または以前見つけたindexより距離が近い場合はその値を距離として保持する
+                if (distance == -1 || distance > newDistance) {
+                    println("  最初に見つけた値または $distance より小さいので再設定")
+                    distance = newDistance
+                    findValueIndex = currentIdx
+                }
+            }
+            currentIdx += 1
+        }
+        return distance
     }
 }
