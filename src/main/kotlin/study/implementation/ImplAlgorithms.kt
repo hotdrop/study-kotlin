@@ -1,14 +1,13 @@
 package study.implementation
 
 import study.AbstractStudy
-import kotlin.math.absoluteValue
 
 class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
 
     override fun execute() {
         super.execute()
 
-        val targetNo = 15
+        val targetNo = 16
         when (targetNo) {
             1 -> execBeautifulDaysAtTheMovies()
             2 -> execViralAdvertising()
@@ -25,6 +24,7 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             13 -> execAcmTeam()
             14 -> execTotalPayCost()
             15 -> execMinimumDistances()
+            16 -> execHalloweenSale()
         }
     }
 
@@ -610,5 +610,68 @@ class ImplAlgorithms : AbstractStudy(ImplAlgorithms::class.java.simpleName) {
             currentIdx += 1
         }
         return distance
+    }
+
+    /**
+     * 引っかかりどころ
+     * なんか規定の実効時間内に終わらずエラーになる。。
+     * O(1)でできるようだが・・
+     */
+    private fun execHalloweenSale() {
+        howManyGames(20,3,6,80).run {
+            if (this != 6) {
+                println("Case1 Failure.. your answer = $this")
+                return
+            }
+        }
+        howManyGames(20,3,6,85).run {
+            if (this != 7) {
+                println("Case2 Failure.. your answer = $this")
+                return
+            }
+        }
+        howManyGames(1,1,1,1).run {
+            if (this != 1) {
+                println("Case3 Failure.. your answer = $this")
+                return
+            }
+        }
+        howManyGames(99,3,1,5555).run {
+            if (this != 3905) {
+                println("Case4 Failure.. your answer = $this")
+                return
+            }
+        }
+        println("Success!")
+    }
+
+    private fun howManyGames(p: Int, d: Int, m: Int, s: Int): Int {
+        if (s < p) {
+            return 0
+        }
+        var count = 0
+        var balance = s
+        var gamePrice = p
+        while (balance >= m) {
+            count++
+            balance -= gamePrice
+            gamePrice = Math.max(gamePrice - d, m)
+        }
+        return count
+    }
+
+    private fun howManyGamesWithOrder1(p: Int, d: Int, m: Int, s: Int): Int {
+        if (s < p) {
+            return 0
+        }
+        var n = 1 + (p - m) / d
+        val t = n * (2 * p - (n - 1) * d) / 2
+        if (s >= t) {
+            n += (s - t) / m
+        } else {
+            val b = 2 * p + d
+            n = ((b - Math.sqrt((b * b - 8 * d * s).toDouble())) / (2 * d)).toInt()
+        }
+        return n
     }
 }
